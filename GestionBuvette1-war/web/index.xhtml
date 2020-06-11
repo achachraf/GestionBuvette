@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="styles.css" />
+        <title>Gestion Buvette</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="layout/header.xhtml" >
+            <ui:param name="isFixed" value="true" />
+        </ui:include>
+        <b:container fluid="true">
+            <b:row>
+                <b:column offset="1" col-md="10">
+                    <ui:include src="layout/homeBody.xhtml" />
+                </b:column>
+            </b:row>
+            <b:row id="topPlat">
+                <h1 class="sectionTitle">Decouvrez Nos Meilleures Plats !</h1>
+                <c:forEach items="#{platController.bestPlats}" var="plat">
+                    <ui:include src="layout/platLayout.xhtml">
+                        <ui:param name="plat" value="#{plat}" />
+                    </ui:include>
+                </c:forEach>
+            </b:row>
+            <b:row>
+                <ui:include src="layout/footer.xhtml" />
+            </b:row>
+        </b:container>
+
+
+    </h:body>
+</html>
+

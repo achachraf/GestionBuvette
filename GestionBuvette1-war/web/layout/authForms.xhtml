@@ -1,0 +1,101 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:f = "http://java.sun.com/jsf/core"
+
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <b:navLink value="Login" class="navElement" onclick="openModal('.loginModal')" />
+    <b:navLink class="navElement" value="Register" onclick="openModal('.registerModal')" />
+
+    <b:modal backdrop="true" title="Login" 
+             styleClass="loginModal">
+        <h3>votre nom d'utilisateur/mot de passe</h3>
+        <b:form>
+            <b:inputText required="true" required-message="Username is required" 
+                         value="#{clientController.client.username}" placeholder="Username..." />
+            <b:inputSecret value="#{clientController.client.password}" placeholder="Password..."/>
+            <b:commandButton action="#{clientController.login()}" style="width: 100%" look="info" value="Login" />
+        </b:form>
+    </b:modal>
+    <b:modal backdrop="true" title="Register" 
+             styleClass="registerModal">
+        <h3>Créer un compte!</h3>
+        <b:form>
+             <b:fetchBeanInfos />
+             <b:messages />
+            <b:inputText required="true" required-message="username is required"
+                         value="#{clientController.client.username}" placeholder="nom d'utilisateur ..." />
+            <b:inputSecret value="#{clientController.client.password}" onkeyup="checkPassword()"  class="password" placeholder="mot de passe...">
+                <f:facet name="append">
+                    <h:outputText class="checkLabel" style="color:red;" value="" />
+                </f:facet>
+            </b:inputSecret>
+            <b:inputSecret onkeyup="checkPassword()"  class="passwordConf" placeholder="Confirmez le mote de passe..." >
+                <f:facet name="append">
+                    <h:outputText class="checkLabel" style="color:red;" value="" />
+                </f:facet>
+            </b:inputSecret>
+
+            <b:inputText required="true" required-message="Nom requis"
+                value="#{clientController.client.nom}"  placeholder="Votre nom..." />
+            <b:inputText required="true" required-message="Nom requis"
+                         value="#{clientController.client.prenom}" placeholder="Votre prenom..." />
+            <b:commandButton class="register" style="width: 100%" look="info" value="Register" update="@form"
+                             oncomplete="if(!validationFailed) { $('.registerModal').modal('hide') } "
+                             action="#{clientController.register()}" />
+        
+        </b:form>
+         
+    </b:modal>
+
+    <script>
+        function openModal(modalName) {
+            $(modalName).modal('show');
+            var interv = setInterval(() => {
+                var elm = document.getElementsByClassName("modal-backdrop in");
+                if (elm !== null) {
+                    elm[0].style.display = "none";
+                    clearInterval(interv);
+                }
+            }, 10);
+        }
+
+        function checkPassword() {
+            var password = document.getElementsByClassName("password")[0].value;
+            var passwordCond = document.getElementsByClassName("passwordConf")[0].value;
+            if (password !== passwordCond || password === "") {
+                document.getElementsByClassName("checkLabel")[0].textContent = "Paswords doesn't matchs";
+                document.getElementsByClassName("checkLabel")[1].textContent = "Paswords doesn't matchs";
+                document.getElementsByClassName("checkLabel")[0].style.color = "red";
+                document.getElementsByClassName("checkLabel")[1].style.color = "red";
+                disableSubmit();
+               
+            }
+            else{
+                document.getElementsByClassName("checkLabel")[0].textContent = "Passwords matchs";
+                document.getElementsByClassName("checkLabel")[1].textContent = "Passwords matchs";
+                document.getElementsByClassName("checkLabel")[0].style.color = "green";
+                document.getElementsByClassName("checkLabel")[1].style.color = "green";
+                enableSubmit();
+            }
+        }
+
+        
+        function enableSubmit(){
+            document.getElementsByClassName("register")[0].removeAttribute("disabled")
+            var className = document.getElementsByClassName("register")[0].className.replace("disabled","");
+            document.getElementsByClassName("register")[0].className = className;       
+        }
+        
+        function disableSubmit(){
+            var className = document.getElementsByClassName("register")[0].className;
+            if(!className.includes("disabled")){
+                document.getElementsByClassName("register")[0].className += " disabled"
+            }
+            document.getElementsByClassName("register")[0].setAttribute("disabled","disabled");
+        }
+
+    </script>
+</ui:composition>

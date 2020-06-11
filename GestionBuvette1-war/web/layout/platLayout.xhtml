@@ -1,0 +1,21 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:f = "http://java.sun.com/jsf/core"
+
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <b:column col-md="4" col-sm="12" col-xs="12">
+        <div class="card">
+            <h:graphicImage library="uploads" name="#{plat.image}" style="width: 100%;height: 300px" />
+            <div class="overlay">
+                <div class="overlay-text">
+                    <a href="#">#{plat.nomPlat}: #{plat.prix} DH</a> 
+                </div>
+            </div>
+        </div>
+    </b:column>
+
+</ui:composition>
+

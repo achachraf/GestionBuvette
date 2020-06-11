@@ -1,0 +1,44 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:f = "http://java.sun.com/jsf/core"
+
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <b:navBar brand="Buvette Ensat" brandHref="#" fluid="true" position="top" sticky="#{isFixed}">
+        <b:navbarLinks>
+            <b:navLink class="navElement" value="Home" href="index.xhtml"></b:navLink>
+            <b:dropMenu value="Categories">
+                <c:forEach items="#{categoriesController.categories}" var="category">
+                    <b:navLink  value="#{category.nom}" href="#"></b:navLink>
+                </c:forEach>
+            </b:dropMenu>
+            <b:navLink class="navElement" value="Top Plats" href="#topPlat"></b:navLink>
+            <b:navLink class="navElement" value="Contact" href="#"></b:navLink>
+        </b:navbarLinks>
+
+        <!-- Login/Register forms-->
+        <c:if test="#{empty clientController.client.idClient}">
+            <b:navbarLinks pull="right">
+                <ui:include src="authForms.xhtml" />
+            </b:navbarLinks>
+        </c:if>
+        <c:if test="#{not empty clientController.client.idClient}">
+            <b:navbarLinks pull="right">
+
+                <b:dropMenu class="logout-nav" value="Bienvenu, M. #{clientController.fullName}">
+                    <b:form>
+                        <b:navCommandLink  value="Logout" action="#{clientController.logout()}" />
+                    </b:form>
+                </b:dropMenu>
+
+            </b:navbarLinks>
+        </c:if>
+
+
+    </b:navBar>
+
+
+
+</ui:composition>

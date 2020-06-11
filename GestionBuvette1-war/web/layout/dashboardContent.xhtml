@@ -1,0 +1,54 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:f = "http://java.sun.com/jsf/core"
+
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <b:column col-md="10">
+        <b:row class="dashboard-cards-row">
+            <h1>Dashboard</h1>
+            <b:column class="dashboard-card" col-md="5">
+                <h5 style="color: red">Commandes non payées</h5>
+                <h:form>
+                    <b:dataTable value="#{consomationController.getNonPaidClientConsomations(clientController.client.idClient)}" 
+                                 mark-search-results="false" paginated="false" searching="false" var="consomation">
+                        <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
+                        <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
+                        <b:dataTableColumn value="#{consomation.montant}"  />
+                    </b:dataTable>
+                  
+                </h:form>
+            </b:column>
+
+            <b:column  class="dashboard-card" offset-md="2" col-md="5">
+                <h5 style="color: green;">Vos dernières commandes passées</h5>
+                 <h:form>
+                    <b:dataTable value="#{consomationController.getLastClientConsomations(clientController.client.idClient,5)}" 
+                                 mark-search-results="false" paginated="false" searching="false" var="consomation">
+                        <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
+                        <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
+                        <b:dataTableColumn value="#{consomation.montant}"  />
+                    </b:dataTable>
+                  
+                </h:form>
+            </b:column>
+
+        </b:row>
+        <b:row>
+            <b:column style="font-size: 20px    " class="dashboard-card" offset-md="2" col-md="8">
+                <h5>Vos informations</h5>
+                <p>Indice de fidelité: <span style="color: green;font-weight: bold">#{clientController.client.fidelite}</span></p>
+                <c:if test="#{clientController.client.active > 0}">
+                    <p>Votre status: <span style="color: green; font-weight: bold">Actif</span> </p>
+                </c:if>
+                 <c:if test="#{clientController.client.active == 0}">
+                    <p>Votre status: <span style="color: red; font-weight: bold">Inactif</span> </p>
+                </c:if>
+            </b:column>
+        </b:row>
+    </b:column>
+
+</ui:composition>

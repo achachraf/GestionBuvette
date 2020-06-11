@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <h:outputStylesheet library="css" name="styles.css" />
+        <title>Dashboard - Gestion Buvette</title>
+    </h:head>
+    <h:body>
+        <c:if test="#{not empty clientController.client.idClient}">
+            <b:container fluid="true">
+                <b:row class="dashboard-nav">
+                    <ui:include src="layout/header.xhtml" >
+                        <ui:param name="isFixed" value="false"/>
+                    </ui:include>
+                </b:row>
+                <b:row >
+                    <ui:include src="layout/dashboardMenu.xhtml"/>
+                    <ui:include src="layout/dashboardContent.xhtml" />
+                </b:row>
+               
+            </b:container>
+
+        </c:if>
+        <c:if test="#{empty clientController.client.idClient}">
+            <h1>you're not allowed to see that !</h1>
+        </c:if>
+    </h:body>
+</html>
+
