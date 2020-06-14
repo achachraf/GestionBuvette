@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="styles.css" />
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body onload="generateIndexes()">
+        <ui:include src="layout/header.xhtml" >
+            <ui:param name="isFixed" value="false"/>
+        </ui:include>
+        <b:row>
+            <b:column offset="1" col-md="9" style="">
+                <h1 style="text-align: center;margin:20px;">Votre Panier</h1>
+                <b:form>
+                    <b:dataTable value="#{commandeController.commandes}" var="commande"  >
+                        <b:dataTableColumn label="N. Commande" />
+                        <b:dataTableColumn value="#{commande.idPlat.nomPlat}" label="Plat" />
+                        <b:dataTableColumn value="#{commande.idPlat.prix}" label="Prix Unitaire" />
+                        <b:dataTableColumn value="#{commande.quantite}" label="Quantité" />
+                        <b:dataTableColumn value="#{commandeController.getTotal(commande.idPlat.prix,commande.quantite)}"
+                                           label="Total"/>
+                        <b:dataTableColumn label="Action">
+                            <b:commandButton onclick="ajax:commadeController.removeFromCommandes(commande)" 
+                                             value="Supprimer" look="danger" />
+                        </b:dataTableColumn>
+                    </b:dataTable>
+                    <hr></hr>
+                    <h2 class="montant">Motant Total : <span>30 DH</span></h2>
+                    <b:commandButton value="Valider la Consomation" look="info"
+                                     style="width:100%" />
+                </b:form>
+
+            </b:column>
+        </b:row>
+    </h:body>
+
+    <script>
+
+        function generateIndexes() {
+            var tbody = document.getElementsByTagName("tbody")[0];
+            var rows = tbody.getElementsByTagName("tr");
+            for (let row of rows) {
+                row.getElementsByTagName("td")[0].textContent = row.rowIndex;
+            }
+        }
+        
+        function removeRow(row){
+            console.log(row);
+        }
+        
+    </script>
+
+</html>
+

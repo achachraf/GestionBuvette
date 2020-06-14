@@ -12,11 +12,20 @@
     <b:modal backdrop="true" title="Login" 
              styleClass="loginModal">
         <h3>votre nom d'utilisateur/mot de passe</h3>
-        <b:form>
-            <b:inputText required="true" required-message="Username is required" 
+        <b:form id="loginForm">
+            
+            <b:messages />
+            
+            <b:inputText id="user" required="true" required-message="Username is required" 
                          value="#{clientController.client.username}" placeholder="Username..." />
-            <b:inputSecret value="#{clientController.client.password}" placeholder="Password..."/>
-            <b:commandButton action="#{clientController.login()}" style="width: 100%" look="info" value="Login" />
+            
+            <b:inputSecret id="pass" value="#{clientController.client.password}" placeholder="Password..."/>
+            
+            
+            <b:commandButton  style="width: 100%" look="info" value="Login" 
+                             oncomplete="loginFormSubmit()"
+                             onclick="ajax:clientController.login()" update="@form:loginForm"/>
+            <b:fetchBeanInfos />
         </b:form>
     </b:modal>
     <b:modal backdrop="true" title="Register" 
@@ -43,7 +52,7 @@
             <b:inputText required="true" required-message="Nom requis"
                          value="#{clientController.client.prenom}" placeholder="Votre prenom..." />
             <b:commandButton class="register" style="width: 100%" look="info" value="Register" update="@form"
-                             oncomplete="if(!validationFailed) { $('.registerModal').modal('hide') } "
+                             oncomplete="if(!validationFailed) { $('.registerModal').modal('hide') }"
                              action="#{clientController.register()}" />
         
         </b:form>
@@ -80,6 +89,18 @@
                 document.getElementsByClassName("checkLabel")[1].style.color = "green";
                 enableSubmit();
             }
+        }
+        
+        function loginFormSubmit(){
+            if(!bfHasError) {
+                $('.loginModal').modal('hide') 
+                window.location.href = "index.xhtml";
+            }
+            
+//            console.log(validationFailed)
+//            console.log(bfMaximumMessageSeverity)
+//            console.log(bfHasError)
+//            console.log(bfHasFatalError)
         }
 
         

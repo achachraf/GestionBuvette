@@ -8,13 +8,16 @@
 
     <b:column col-md="4" col-sm="12" col-xs="12">
         <div class="card">
-            <h:graphicImage library="uploads" name="#{plat.image}" style="width: 100%;height: 300px" />
-            <div class="overlay">
-                <div class="overlay-text">
-                    <a href="#">#{plat.nomPlat}: #{plat.prix} DH</a> 
+            <b:form>
+                <h:graphicImage library="uploads" name="#{plat.image}" style="width: 100%;height: 300px" />
+                <div class="overlay">
+                    <div class="overlay-text">
+                        <a href="plat.xhtml?id=#{plat.idPlat}"> #{plat.nomPlat}: #{plat.prix} DH  </a>
+                    </div>
                 </div>
-            </div>
+            </b:form>
         </div>
+
     </b:column>
 
 </ui:composition>

@@ -59,7 +59,7 @@ public class ClientController implements Serializable {
         Client authClient = clientFacade.authClient(client);
         if(authClient != null){
             client = authClient;
-            return "index";
+            return "index.xhtml";
         }
         else{
             client = new Client();
@@ -68,7 +68,7 @@ public class ClientController implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "incorrect username and password",
                             "Please enter correct username and password"));
-            return "index";
+            return "index.xhtml";
         }
     }
   
@@ -80,4 +80,6 @@ public class ClientController implements Serializable {
     public String getFullName(){
         return client.getPrenom()+" "+client.getNom();
     }
+    
+    
 }

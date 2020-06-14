@@ -6,13 +6,18 @@
 package controllers;
 
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.emptyType;
+import entities.Commande;
 import entities.Plat;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import services.PlatFacade;
 
@@ -31,8 +36,30 @@ public class PlatController implements Serializable {
     @EJB
     PlatFacade platFacade;
     
+    private Plat plat = new Plat();
+    
+    private boolean redirection = false;
+    
     public PlatController() {
     }
+
+    public Plat getPlat() {
+        return plat;
+    }
+
+    public void setPlat(Plat plat) {
+        this.plat = plat;
+    }
+
+    public boolean isRedirection() {
+        return redirection;
+    }
+
+    public void setRedirection(boolean redirection) {
+        this.redirection = redirection;
+    }
+    
+    
     
     public Plat getRandomPlat(){
         Plat plat = new Plat();
@@ -58,5 +85,52 @@ public class PlatController implements Serializable {
             return null;
         }
     }
+    
+//    public String setSelectedPlat(Plat plat){
+//        this.plat = plat;
+//        return "plat.xhtml";
+//    }
+    
+    public String logPlat(Plat plat){
+        System.out.println("okkk");
+        System.out.println(plat);
+        //return "plat.xhtml?id="+plat.getIdPlat().toString();
+        FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                           "Plat ajouté au panier",null));
+        return "index.xhtml";
+    }
+    
+    public String indexRedirect(){
+        redirection = true;
+        return "index.xhtml?faces-redirect=true&includeViewParams=true";
+    }
+    
+    public Plat getPlatById(int id){
+        try {
+            Plat plat = platFacade.find(id);
+            return plat;
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
+        }
+    }
+    
+//    public String addToCart(Plat plat,ConsomationController consomationController,Integer qte){
+//        
+//        Commande commande = new Commande();
+//        commande.setIdConsom(consomationController.consomation);
+//        commande.setIdPlat(plat);
+//        commande.setQuantite(qte);
+//        consomationController.consomation.getCommandeList().add(commande);
+//        
+//        
+//            FacesContext.getCurrentInstance().addMessage(null,
+//                        new FacesMessage(FacesMessage.SEVERITY_INFO,
+//                               "Plat ajouté au panier",null));
+//            return "index.xhtml?faces-redirect=true";
+//    }
     
 }

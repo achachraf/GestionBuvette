@@ -156,6 +156,26 @@ body{
     margin-bottom: 25px;
 }
 
+.plat-form .col-md-2{
+    float: right;
+}
+
+.plat-form{
+    margin-bottom: 30px;
+    margin-left: 30px;
+}
+
+.montant{
+    background-color: #ddd;
+    padding: 20px;
+    border-radius: 7px;
+}
+
+.montant span{
+    float:right;
+    margin-right: 7%;
+}
+
 /*
 .navElement{
     background-color: transparent;

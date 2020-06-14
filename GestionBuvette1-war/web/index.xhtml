@@ -16,11 +16,20 @@
         </ui:include>
         <b:container fluid="true">
             <b:row>
+
                 <b:column offset="1" col-md="10">
+
                     <ui:include src="layout/homeBody.xhtml" />
                 </b:column>
             </b:row>
+            <b:row>
+                <b:column offset-md="4" col-md="4">
+                    <b:fetchBeanInfos />
+                    <b:messages/>
+                </b:column>
+            </b:row>
             <b:row id="topPlat">
+
                 <h1 class="sectionTitle">Decouvrez Nos Meilleures Plats !</h1>
                 <c:forEach items="#{platController.bestPlats}" var="plat">
                     <ui:include src="layout/platLayout.xhtml">

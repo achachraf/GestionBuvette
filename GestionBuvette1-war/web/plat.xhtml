@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="styles.css" />
+        <c:choose>
+            <c:when test="#{(empty clientController.client.idClient or empty param['id']) }">
+                <title>Page non alloutée</title>
+            </c:when>
+            <c:otherwise>
+                <ui:param name="plat" value="#{platController.getPlatById(param['id'])}" />
+                <title>Plat - #{plat.nomPlat}</title>
+
+            </c:otherwise>
+        </c:choose>
+
+
+    </h:head>
+    <h:body>
+
+        <ui:include src="layout/header.xhtml" >
+            <ui:param name="isFixed" value="false"/>
+        </ui:include>
+        <c:choose>
+
+            <c:when test="#{(empty clientController.client.idClient or empty param['id']) }">
+                <h1>Cette actions n'est pas allouée</h1>
+            </c:when>
+            <c:otherwise >
+
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column col-md="5">
+                            <h:graphicImage library="uploads" name="#{plat.image}" style="width: 100%;height: 500px;margin:20px" />
+                        </b:column>
+                        <b:column class="plat-form" offset-md="1" col-md="5">
+                            <b:form>
+                                <b:messages />
+                                <h2>Nom du plat: <span style="float: right">#{plat.nomPlat}</span></h2>
+                                <h2>Prix unitaire: <span style="float: right"><span class="priceUnit">#{plat.prix}</span> DH</span></h2>
+                                <h2>
+                                    <span>Quantité:</span>
+                                    <b:inputText validator-message="Nombre requis pour la quantité" 
+                                                 onkeyup="changeTotal(this)"  style="float: right" col-md="2"
+                                                 value="#{commandeController.commande.quantite }">
+                                        <f:validateRegex  pattern="^[0-9]*$" />
+                                    </b:inputText>
+                                </h2>
+                                <br></br>
+                                <hr></hr>
+                                <h1>Total: <span class="total" style="float: right">- DH</span></h1>
+                                <b:commandButton  action="#{commandeController.addToCommandes(plat)}" 
+                                                  look="info" value="Ajouter au panier" style="width: 100%" >
+                                    <f:param name="id" value="#{plat.idPlat}" />
+                                </b:commandButton>
+                            </b:form>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <ui:include src="layout/footer.xhtml" />
+                    </b:row>
+
+                </b:container>
+            </c:otherwise>
+        </c:choose>
+
+
+
+
+    </h:body>
+
+    <script>
+        function changeTotal(elm) {
+            var qte = parseFloat(elm.value);
+            var total = document.getElementsByClassName("total")[0];
+            if (isNaN(qte)) {
+                total.textContent = "- DH";
+            } else {
+                var priceUnit = parseFloat(document.getElementsByClassName("priceUnit")[0].textContent);
+                total.textContent = qte * priceUnit + " DH";
+            }
+
+        }
+
+    </script>
+</html>
+

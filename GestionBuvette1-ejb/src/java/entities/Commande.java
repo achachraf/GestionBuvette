@@ -39,7 +39,7 @@ public class Commande implements Serializable {
     @Column(name = "ID_COMD")
     private Integer idComd;
     @Column(name = "QUANTITE")
-    private Integer quantite;
+    private Integer quantite = new Integer(0);
     @JoinColumn(name = "ID_PLAT", referencedColumnName = "ID_PLAT")
     @ManyToOne(optional = false)
     private Plat idPlat;
@@ -62,12 +62,12 @@ public class Commande implements Serializable {
         this.idComd = idComd;
     }
 
-    public Integer getQuantite() {
-        return quantite;
+    public String getQuantite() {
+        return quantite.toString();
     }
 
-    public void setQuantite(Integer quantite) {
-        this.quantite = quantite;
+    public void setQuantite(String quantite) {
+        this.quantite = Integer.parseInt(quantite);
     }
 
     public Plat getIdPlat() {
@@ -108,7 +108,9 @@ public class Commande implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Commande[ idComd=" + idComd + " ]";
+        return "Commande{" + "idComd=" + idComd + ", quantite=" + quantite + ", idPlat=" + idPlat + ", idConsom=" + idConsom + '}';
     }
+
+   
     
 }
