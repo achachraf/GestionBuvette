@@ -62,7 +62,8 @@ public class Client implements Serializable {
     @Size(max = 100)
     @Column(name = "PRENOM")
     private String prenom;
-    @Column(name = "DATE_CREATION")
+    @Column(name = "DATE_CREATION",insertable = false, updatable = false)
+    @Basic(optional = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

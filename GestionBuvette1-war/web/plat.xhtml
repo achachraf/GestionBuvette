@@ -31,6 +31,9 @@
             <c:when test="#{(empty clientController.client.idClient or empty param['id']) }">
                 <h1>Cette actions n'est pas allouée</h1>
             </c:when>
+            <c:when test="#{empty plat}">
+                <h1>Ce Plat n'existe pas !</h1>
+            </c:when>
             <c:otherwise >
 
                 <b:container fluid="true">
@@ -45,15 +48,15 @@
                                 <h2>Prix unitaire: <span style="float: right"><span class="priceUnit">#{plat.prix}</span> DH</span></h2>
                                 <h2>
                                     <span>Quantité:</span>
-                                    <b:inputText validator-message="Nombre requis pour la quantité" 
+                                    <b:inputText validator-message="Nombre non null requis pour la quantité" 
                                                  onkeyup="changeTotal(this)"  style="float: right" col-md="2"
                                                  value="#{commandeController.commande.quantite }">
-                                        <f:validateRegex  pattern="^[0-9]*$" />
+                                        <f:validateRegex  pattern="^[1-9]*$" />
                                     </b:inputText>
                                 </h2>
                                 <br></br>
                                 <hr></hr>
-                                <h1>Total: <span class="total" style="float: right">- DH</span></h1>
+                                <h1>Total: <span class="total" style="float: right">#{plat.prix} DH</span></h1>
                                 <b:commandButton  action="#{commandeController.addToCommandes(plat)}" 
                                                   look="info" value="Ajouter au panier" style="width: 100%" >
                                     <f:param name="id" value="#{plat.idPlat}" />

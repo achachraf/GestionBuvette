@@ -6,16 +6,21 @@
 
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <b:navBar brand="Buvette Ensat" brandHref="#" fluid="true" position="top" sticky="#{isFixed}">
+    <b:navBar brand="Buvette Ensat" brandHref="index.xhtml" fluid="true" position="top" sticky="#{isFixed}">
         <b:navbarLinks>
             <b:navLink class="navElement" value="Home" href="index.xhtml"></b:navLink>
             <b:dropMenu value="Categories">
                 <c:forEach items="#{categoriesController.categories}" var="category">
-                    <b:navLink  value="#{category.nom}" href="#"></b:navLink>
+                    <b:navLink  value="#{category.nom}" href="category.xhtml?id=#{category.idCat}"></b:navLink>
                 </c:forEach>
             </b:dropMenu>
             <b:navLink class="navElement" value="Top Plats" href="#topPlat"></b:navLink>
             <b:navLink class="navElement" value="Contact" href="#"></b:navLink>
+            <c:if test="#{not empty clientController.client.idClient}">
+                <b:navLink icon="shopping-cart" href="cart.xhtml" value="Votre Panier">
+                    <b:badge value="#{commandeController.commandes.size()}" />
+                </b:navLink>
+            </c:if>
         </b:navbarLinks>
 
         <!-- Login/Register forms-->

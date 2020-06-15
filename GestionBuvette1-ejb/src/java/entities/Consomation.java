@@ -49,7 +49,8 @@ public class Consomation implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_CONSOM")
     private Integer idConsom;
-    @Column(name = "DATE_CREATION")
+    @Column(name = "DATE_CREATION",insertable = false, updatable = false)
+    @Basic(optional = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

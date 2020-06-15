@@ -11,6 +11,8 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import services.CategoryFacade;
 
 /**
@@ -33,5 +35,15 @@ public class CategoriesController implements Serializable {
     public List<Category> getCategories(){
         List<Category> categories = categoryFacade.findAll();
         return categories;
+    }
+    
+    public Category getCategoryById(int idCategory){
+        Category category = categoryFacade.find(idCategory);
+//        if(category == null){
+//            FacesContext.getCurrentInstance().addMessage(null,
+//                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+//                           "Cette category n'existe pas","null"));
+//        }
+        return category;
     }
 }

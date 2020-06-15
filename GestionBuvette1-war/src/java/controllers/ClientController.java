@@ -51,7 +51,9 @@ public class ClientController implements Serializable {
         client.setActive(1);
         client.setFidelite((float) 0.0);
         System.out.println(client); 
-        clientFacade.create(client);
+        Integer idClient = clientFacade.createAndReturn(client);
+        System.out.println("ID: "+idClient);
+        client.setIdClient(idClient);
         return "index?faces-redirect=true";
     }
     

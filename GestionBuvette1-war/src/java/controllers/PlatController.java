@@ -118,19 +118,16 @@ public class PlatController implements Serializable {
         }
     }
     
-//    public String addToCart(Plat plat,ConsomationController consomationController,Integer qte){
-//        
-//        Commande commande = new Commande();
-//        commande.setIdConsom(consomationController.consomation);
-//        commande.setIdPlat(plat);
-//        commande.setQuantite(qte);
-//        consomationController.consomation.getCommandeList().add(commande);
-//        
-//        
-//            FacesContext.getCurrentInstance().addMessage(null,
-//                        new FacesMessage(FacesMessage.SEVERITY_INFO,
-//                               "Plat ajouté au panier",null));
-//            return "index.xhtml?faces-redirect=true";
-//    }
+    public List<Plat> getPlatsByCategory(int idCategory){
+        List<Plat> plats = platFacade.getPlatsByCategory(idCategory);
+        if(plats.isEmpty()){
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                           "Cette category est vide","null"));
+        }
+        return plats;
+    }
+    
+    
     
 }

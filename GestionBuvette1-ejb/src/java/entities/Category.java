@@ -48,7 +48,8 @@ public class Category implements Serializable {
     @Size(max = 100)
     @Column(name = "NOM")
     private String nom;
-    @Column(name = "DATE_CREATION")
+    @Column(name = "DATE_CREATION",insertable = false, updatable = false)
+    @Basic(optional = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCat")

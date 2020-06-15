@@ -39,4 +39,10 @@ public class PlatFacade extends AbstractFacade<Plat> {
         return plats;
      
     }
+    
+    public List<Plat> getPlatsByCategory(int idCategory){
+        TypedQuery<Plat> query = em.createQuery("SELECT p from Plat p WHERE p.idCat.idCat = :idCategory",Plat.class);
+        return query.getResultList();
+        
+    }
 }

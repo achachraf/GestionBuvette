@@ -39,7 +39,7 @@ public class Commande implements Serializable {
     @Column(name = "ID_COMD")
     private Integer idComd;
     @Column(name = "QUANTITE")
-    private Integer quantite = new Integer(0);
+    private Integer quantite = new Integer(1);
     @JoinColumn(name = "ID_PLAT", referencedColumnName = "ID_PLAT")
     @ManyToOne(optional = false)
     private Plat idPlat;
@@ -68,6 +68,10 @@ public class Commande implements Serializable {
 
     public void setQuantite(String quantite) {
         this.quantite = Integer.parseInt(quantite);
+    }
+    
+    public Integer getIntQuantite(){
+        return quantite;
     }
 
     public Plat getIdPlat() {

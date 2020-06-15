@@ -157,7 +157,7 @@ public class Plat implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Plat[ idPlat=" + idPlat + " ]";
+        return "entities.Plat[ idPlat=" + idPlat + " + nomPlat= "+nomPlat+ "]";
     }
     
 }
