@@ -94,7 +94,10 @@
         function loginFormSubmit(){
             if(!bfHasError) {
                 $('.loginModal').modal('hide') 
-                window.location.href = "index.xhtml";
+                window.location.href = "/GestionBuvette1-war/index.xhtml";
+            }
+            else{
+                bfHasError = false;
             }
             
 //            console.log(validationFailed)

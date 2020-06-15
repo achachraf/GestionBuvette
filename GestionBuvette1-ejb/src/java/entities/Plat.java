@@ -160,4 +160,6 @@ public class Plat implements Serializable {
         return "entities.Plat[ idPlat=" + idPlat + " + nomPlat= "+nomPlat+ "]";
     }
     
+    
+    
 }

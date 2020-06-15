@@ -28,5 +28,14 @@ public class CommandeFacade extends AbstractFacade<Commande> {
     public CommandeFacade() {
         super(Commande.class);
     }
+
+    @Override
+    public void create(Commande entity) {
+        super.create(entity); 
+        em.flush();
+        em.refresh(entity);
+    }
+    
+    
     
 }

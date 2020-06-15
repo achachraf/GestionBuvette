@@ -45,4 +45,13 @@ public class PlatFacade extends AbstractFacade<Plat> {
         return query.getResultList();
         
     }
+
+    @Override
+    public void create(Plat entity) {
+        super.create(entity);
+        em.flush();
+        em.refresh(entity);
+    }
+    
+    
 }

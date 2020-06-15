@@ -3,21 +3,20 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:b="http://bootsfaces.net/ui" 
     xmlns:f = "http://java.sun.com/jsf/core"
-
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <b:navBar brand="Buvette Ensat" brandHref="index.xhtml" fluid="true" position="top" sticky="#{isFixed}">
+    <b:navBar brand="Buvette Ensat" brandHref="/GestionBuvette1-war/index.xhtml" fluid="true" position="top" sticky="#{isFixed}">
         <b:navbarLinks>
-            <b:navLink class="navElement" value="Home" href="index.xhtml"></b:navLink>
+            <b:navLink class="navElement" value="Home" href="/GestionBuvette1-war/index.xhtml"></b:navLink>
             <b:dropMenu value="Categories">
                 <c:forEach items="#{categoriesController.categories}" var="category">
-                    <b:navLink  value="#{category.nom}" href="category.xhtml?id=#{category.idCat}"></b:navLink>
+                    <b:navLink  value="#{category.nom}" href="/GestionBuvette1-war/category.xhtml?id=#{category.idCat}"></b:navLink>
                 </c:forEach>
             </b:dropMenu>
-            <b:navLink class="navElement" value="Top Plats" href="#topPlat"></b:navLink>
+            <b:navLink class="navElement" value="Top Plats" href="/GestionBuvette1-war/index.xhtml#topPlat"></b:navLink>
             <b:navLink class="navElement" value="Contact" href="#"></b:navLink>
             <c:if test="#{not empty clientController.client.idClient}">
-                <b:navLink icon="shopping-cart" href="cart.xhtml" value="Votre Panier">
+                <b:navLink icon="shopping-cart" href="/GestionBuvette1-war/cart.xhtml" value="Votre Panier">
                     <b:badge value="#{commandeController.commandes.size()}" />
                 </b:navLink>
             </c:if>
@@ -31,15 +30,13 @@
         </c:if>
         <c:if test="#{not empty clientController.client.idClient}">
             <b:navbarLinks pull="right">
-
                 <b:dropMenu class="logout-nav" value="Bienvenu, M. #{clientController.fullName}">
                     <b:form>
                         <b:navCommandLink  value="Logout" action="#{clientController.logout()}" />
                         <b:navLink></b:navLink>
-                        <b:navCommandLink  value="Dashboard" href="dashboard.xhtml" />
+                        <b:navCommandLink  value="Dashboard" href="/GestionBuvette1-war/dashboard/index.xhtml" />
                     </b:form>
                 </b:dropMenu>
-
             </b:navbarLinks>
         </c:if>
 

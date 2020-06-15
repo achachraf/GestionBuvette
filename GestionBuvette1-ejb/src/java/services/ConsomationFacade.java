@@ -50,6 +50,14 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
         return consomations;
     }
     
+    
+    
+//    public List<Consomation> findInProgressConsomationsByClientId(Integer idClient){
+//        TypedQuery<Consomation> query = em.createQuery(
+//                "SELECT c FROM Consomation c WHERE c.client.idC"
+//        )
+//    }
+    
 //   public Consomation getRanConsomation(){
 //       Consomation consomation = new Consomation();
 //       consomation.setMontant(30);
@@ -59,5 +67,12 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
 //       List<Consomation> consomations = new ArrayList<>();
 //       consomations.add(new Consomation())
 //   }
+
+    @Override
+    public void create(Consomation entity) {
+        super.create(entity);
+        em.flush();
+        em.refresh(entity);
+    }
     
 }

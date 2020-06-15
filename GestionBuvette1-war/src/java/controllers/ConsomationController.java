@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -55,31 +56,20 @@ public class ConsomationController implements Serializable {
         this.consomation = consomation;
     }
 
-    public List<Consomation> getNonPaidClientConsomations(Integer idClient) {
-        try {
-            List<Consomation> consomations = consomationFacade.findNonPaidConsomationsByClientId(idClient);
-            return consomations;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "Server Error",
-                            "Server Error"));
-            return null;
-        }
+    public List<Consomation> getNonPaidClientConsomations(Client client) {
+        List<Consomation> consomations = client.getConsomationList().stream().
+                filter(c->c.getDatePayement()==null)
+                .collect(Collectors.toList());
+        return consomations;
+       
     }
 
-    public List<Consomation> getLastClientConsomations(Integer idClient, int limit) {
-        try {
-            List<Consomation> consomations = consomationFacade.findLimitedConsomationsByClientId(idClient, limit);
-            return consomations;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "Server Error",
-                            "Server Error"));
-            return null;
+    public List<Consomation> getLastClientConsomations(Client client, int limit) {
+        if(client.getConsomationList().size()>limit){
+            return client.getConsomationList().subList(0, limit);
+        }
+        else{
+            return client.getConsomationList();
         }
     }
 
@@ -106,6 +96,10 @@ public class ConsomationController implements Serializable {
             consomation.setCommandeList(commandes);
             consomation.setClient(client);
             consomationFacade.create(consomation);
+            commandes.clear();
+            if(!client.getConsomationList().contains(consomation)){
+                client.getConsomationList().add(consomation);
+            }
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO,
                             "Votre consomation est validée",
@@ -114,6 +108,33 @@ public class ConsomationController implements Serializable {
         }
 
         
+    }
+    
+    public List<Consomation> getInProgressConsomations(Client client){
+        List<Consomation> consamations = client.getConsomationList().stream()
+                .filter(consom->consom.getDatePrepa() == null)
+                .collect(Collectors.toList());
+        System.out.println("consoms size : "+consamations.size());
+        return consamations;
+    }
+    
+    public List<Consomation> getNonPaidClientConsomationsLimit(Client client,int limit){
+         List<Consomation> consomations = client.getConsomationList().stream()
+                 .sorted((c1,c2)->c1.getDateCreation().compareTo(c2.getDateCreation()))
+                 .filter(c->c.getDatePayement() == null)
+                 .collect(Collectors.toList());
+         if(consomations.size()>limit){
+             return consomations.subList(0, limit);
+         }
+         else
+            return consomations;
+    }
+                 
+    public List<Consomation> getPaidConsomations(Client client){
+        List<Consomation> consomations = client.getConsomationList().stream()
+                .filter(c->c.getDatePayement() != null)
+                .collect(Collectors.toList());
+        return consomations;
     }
 
 }

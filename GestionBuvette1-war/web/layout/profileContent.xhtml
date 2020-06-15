@@ -1,0 +1,96 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:f = "http://java.sun.com/jsf/core"
+
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <b:column   col-md="4" style="margin-top: 2%;margin-left: 1%">
+        <h1 style="text-align: center;margin-bottom: 20px;">Vos Informations</h1>
+        <b:form>
+            <b:messages />
+            <b:fetchBeanInfos />
+            <label for="username">Username: </label>
+            <b:inputText id="username" value="#{clientController.client.username}" disabled="true" />
+           
+            <label for="nom">Nom: </label>
+            <b:inputText id="nom" required="true" required-message="Nom requis"
+                value="#{clientController.client.nom}"  placeholder="Votre nom..." />
+            <label for="prenom">Prénom: </label>
+            <b:inputText id="prenom" required="true" required-message="Nom requis"
+                         value="#{clientController.client.prenom}" placeholder="Votre prenom..." />
+            <b:commandButton class="update" style="width: 100%" look="info" value="Modifier" update="@form"
+                             action="#{clientController.updateClient()}" />
+        </b:form>
+        <h1 style="text-align: center;margin-bottom: 20px;">Changez votre mot de passe: </h1>
+        <b:form>
+            <b:messages />
+            <b:fetchBeanInfos />
+             <b:inputSecret value="#{clientController.password}" onkeyup="checkPassword()"  class="password" placeholder="mot de passe...">
+                <f:facet name="append">
+                    <h:outputText class="checkLabel" style="color:red;" value="" />
+                </f:facet>
+            </b:inputSecret>
+            <b:inputSecret onkeyup="checkPassword()"  class="passwordConf" placeholder="Confirmez le mote de passe..." >
+                <f:facet name="append">
+                    <h:outputText class="checkLabel" style="color:red;" value="" />
+                </f:facet>
+            </b:inputSecret>
+              <b:commandButton class="changePass" style="width: 100%" look="info" value="Modifier" update="@form"
+                             action="#{clientController.changePassword()}" />
+        </b:form>
+    </b:column>
+    
+    <b:column class="dashboard-card" offset-md="1" col-md="4" style="margin-top: 2%">
+        <h1 style="text-align: center;margin-bottom: 20px">Statistiques Génerée</h1>
+        <ui:param name="bestPlat" value="#{clientController.getBestPlat(platController.plats)}" />
+        <h3>Votre plat préferé: <span style="color: green;font-weight: bold">#{bestPlat.nomPlat}</span></h3>
+        <h3>Votre categorie préferé: <span style="color: green;font-weight: bold">#{bestPlat.idCat.nom}</span></h3>
+        <hr></hr>
+        <h3>Moyenne de consomation/j : <span style="color: green;font-weight: bold">#{clientController.consomAvg()} DH</span></h3>
+        <h3>Consomation minimal : <span style="color: green;font-weight: bold">#{clientController.getMinConsom()} DH</span></h3>
+        <h3>Consomation maximal : <span style="color: red;font-weight: bold">#{clientController.getMaxConsom()} DH</span></h3>
+        <!--Todo !! -->
+<!--        <h3>vous aver consomé ce jour : <span style="color: red;font-weight: bold">5 DH</span></h3>
+        <h3>vous avez consomé ce mois : <span style="color: red;font-weight: bold">100 DH</span></h3>-->
+        <hr></hr>
+        <h3 style="text-align: center">Merci pour votre fidelité !</h3>
+    </b:column>
+    
+    <script>
+        function checkPassword() {
+            var password = document.getElementsByClassName("password")[0].value;
+            var passwordCond = document.getElementsByClassName("passwordConf")[0].value;
+            if (password !== passwordCond || password === "") {
+                document.getElementsByClassName("checkLabel")[0].textContent = "Paswords doesn't matchs";
+                document.getElementsByClassName("checkLabel")[1].textContent = "Paswords doesn't matchs";
+                document.getElementsByClassName("checkLabel")[0].style.color = "red";
+                document.getElementsByClassName("checkLabel")[1].style.color = "red";
+                disableSubmit();
+               
+            }
+            else{
+                document.getElementsByClassName("checkLabel")[0].textContent = "Passwords matchs";
+                document.getElementsByClassName("checkLabel")[1].textContent = "Passwords matchs";
+                document.getElementsByClassName("checkLabel")[0].style.color = "green";
+                document.getElementsByClassName("checkLabel")[1].style.color = "green";
+                enableSubmit();
+            }
+        }
+        
+        function enableSubmit(){
+            document.getElementsByClassName("changePass")[0].removeAttribute("disabled");
+            var className = document.getElementsByClassName("changePass")[0].className.replace("disabled","");
+            document.getElementsByClassName("changePass")[0].className = className;       
+        }
+        
+        function disableSubmit(){
+            var className = document.getElementsByClassName("changePass")[0].className;
+            if(!className.includes("disabled")){
+                document.getElementsByClassName("changePass")[0].className += " disabled"
+            }
+            document.getElementsByClassName("changePass")[0].setAttribute("disabled","disabled");
+        }
+    </script>
+</ui:composition>

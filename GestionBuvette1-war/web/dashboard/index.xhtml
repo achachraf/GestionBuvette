@@ -7,20 +7,20 @@
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <h:outputStylesheet library="css" name="styles.css" />
-        <title>Dashboard - Gestion Buvette</title>
+        <title>aDashboard - Gestion Buvette</title>
     </h:head>
     <h:body>
 
         <b:container fluid="true">
             <b:row class="dashboard-nav">
-                <ui:include src="layout/header.xhtml" >
+                <ui:include src="../layout/header.xhtml" >
                     <ui:param name="isFixed" value="false"/>
                 </ui:include>
             </b:row>
             <c:if test="#{not empty clientController.client.idClient}">
                 <b:row >
-                    <ui:include src="layout/dashboardMenu.xhtml"/>
-                    <ui:include src="layout/dashboardContent.xhtml" />
+                    <ui:include src="../layout/dashboardMenu.xhtml"/>
+                    <ui:include src="../layout/dashboardContent.xhtml" />
                 </b:row>
             </c:if>
             <c:if test="#{empty clientController.client.idClient}">

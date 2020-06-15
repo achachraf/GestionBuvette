@@ -49,8 +49,10 @@ public class ClientFacade extends AbstractFacade<Client> {
     public Integer createAndReturn(Client client) {
         super.create(client); 
         em.flush();
+        em.refresh(client);
         return client.getIdClient();
     }
+    
     
   
     

@@ -6,15 +6,18 @@
 
     xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    
-        <b:column col-md="2" class="dashboard-menu">
+
+    <b:column col-md="2" class="dashboard-menu">
+        <b:form>
             <b:listLinks id="navbar">
-                <b:navLink href="#" value="Dashboard" icon="home"></b:navLink>
-                <b:navLink href="#" value="Vos Commandes" icon="shopping-cart"></b:navLink>
-                <b:navLink href="#" value="Votre Profile" icon="user"></b:navLink>
-                <b:navLink href="#" value="Deconnexion" icon="log-out"></b:navLink>
+                <b:navLink href="/GestionBuvette1-war/dashboard/index.xhtml" value="Dashboard" icon="home"></b:navLink>
+                <b:navLink href="/GestionBuvette1-war/dashboard/consomations.xhtml" value="Vos Consomations" icon="shopping-cart"></b:navLink>
+                <b:navLink href="/GestionBuvette1-war/dashboard/profile.xhtml" value="Votre Profile" icon="user"></b:navLink>
+                <b:navCommandLink action="#{clientController.logout()}" value="Deconnexion" icon="log-out" />
+
             </b:listLinks>
-        </b:column>
-  
+        </b:form>
+    </b:column>
+
 
 </ui:composition>

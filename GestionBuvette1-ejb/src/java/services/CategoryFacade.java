@@ -28,5 +28,14 @@ public class CategoryFacade extends AbstractFacade<Category> {
     public CategoryFacade() {
         super(Category.class);
     }
+
+    @Override
+    public void create(Category entity) {
+        super.create(entity);
+        em.flush();
+        em.refresh(entity);
+    }
+    
+    
     
 }

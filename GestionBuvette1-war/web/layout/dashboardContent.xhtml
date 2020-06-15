@@ -11,9 +11,9 @@
         <b:row class="dashboard-cards-row">
             <h1>Dashboard</h1>
             <b:column class="dashboard-card" col-md="5">
-                <h5 style="color: red">Commandes non payées</h5>
+                <h5 style="color: red">Dernières commandes non payées</h5>
                 <h:form>
-                    <b:dataTable value="#{consomationController.getNonPaidClientConsomations(clientController.client.idClient)}" 
+                    <b:dataTable value="#{consomationController.getNonPaidClientConsomationsLimit(clientController.client,5)}" 
                                  mark-search-results="false" paginated="false" searching="false" var="consomation">
                         <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
                         <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
@@ -26,7 +26,7 @@
             <b:column  class="dashboard-card" offset-md="2" col-md="5">
                 <h5 style="color: green;">Vos dernières commandes passées</h5>
                  <h:form>
-                    <b:dataTable value="#{consomationController.getLastClientConsomations(clientController.client.idClient,5)}" 
+                    <b:dataTable value="#{consomationController.getLastClientConsomations(clientController.client,5)}" 
                                  mark-search-results="false" paginated="false" searching="false" var="consomation">
                         <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
                         <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />

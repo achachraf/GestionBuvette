@@ -49,9 +49,10 @@
                                 <h2>
                                     <span>Quantité:</span>
                                     <b:inputText validator-message="Nombre non null requis pour la quantité" 
+                                                 
                                                  onkeyup="changeTotal(this)"  style="float: right" col-md="2"
                                                  value="#{commandeController.commande.quantite }">
-                                        <f:validateRegex  pattern="^[1-9]*$" />
+                                        <f:validateRegex  pattern="^[0-9]*$" />
                                     </b:inputText>
                                 </h2>
                                 <br></br>
@@ -80,6 +81,10 @@
     <script>
         function changeTotal(elm) {
             var qte = parseFloat(elm.value);
+            if(qte === 0){
+                elm.value = "1";
+                qte = 1;
+            }
             var total = document.getElementsByClassName("total")[0];
             if (isNaN(qte)) {
                 total.textContent = "- DH";

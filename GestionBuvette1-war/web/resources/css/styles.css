@@ -176,6 +176,10 @@ body{
     margin-right: 7%;
 }
 
+.dashboard-card h3{
+    font-size: 20px;
+}
+
 /*
 .navElement{
     background-color: transparent;

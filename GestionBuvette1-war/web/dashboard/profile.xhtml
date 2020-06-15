@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <h:outputStylesheet library="css" name="styles.css" />
+        <title>Votre Profile</title>
+    </h:head>
+    <h:body>
+        <b:container fluid="true">
+            <b:row class="dashboard-nav">
+                <ui:include src="../layout/header.xhtml" >
+                    <ui:param name="isFixed" value="false"/>
+                </ui:include>
+            </b:row>
+            <c:if test="#{not empty clientController.client.idClient}">
+                <b:row >
+                    <ui:include src="../layout/dashboardMenu.xhtml"/>
+                    <ui:include src="../layout/profileContent.xhtml" />
+                </b:row>
+            </c:if>
+            <c:if test="#{empty clientController.client.idClient}">
+                <h1>Vous n'êtes pas autorisé pour voir cette page, veuillez s'authentifier</h1>
+            </c:if>
+        </b:container>
+    </h:body>
+</html>
+

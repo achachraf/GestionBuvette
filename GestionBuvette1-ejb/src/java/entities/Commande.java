@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,7 +40,7 @@ public class Commande implements Serializable {
     @Column(name = "ID_COMD")
     private Integer idComd;
     @Column(name = "QUANTITE")
-    private Integer quantite = new Integer(1);
+    private Integer quantite = 1;
     @JoinColumn(name = "ID_PLAT", referencedColumnName = "ID_PLAT")
     @ManyToOne(optional = false)
     private Plat idPlat;
