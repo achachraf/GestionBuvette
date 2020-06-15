@@ -35,6 +35,8 @@
                 <b:dropMenu class="logout-nav" value="Bienvenu, M. #{clientController.fullName}">
                     <b:form>
                         <b:navCommandLink  value="Logout" action="#{clientController.logout()}" />
+                        <b:navLink></b:navLink>
+                        <b:navCommandLink  value="Dashboard" href="dashboard.xhtml" />
                     </b:form>
                 </b:dropMenu>
 

@@ -10,24 +10,26 @@
         <title>Dashboard - Gestion Buvette</title>
     </h:head>
     <h:body>
-        <c:if test="#{not empty clientController.client.idClient}">
-            <b:container fluid="true">
-                <b:row class="dashboard-nav">
-                    <ui:include src="layout/header.xhtml" >
-                        <ui:param name="isFixed" value="false"/>
-                    </ui:include>
-                </b:row>
+
+        <b:container fluid="true">
+            <b:row class="dashboard-nav">
+                <ui:include src="layout/header.xhtml" >
+                    <ui:param name="isFixed" value="false"/>
+                </ui:include>
+            </b:row>
+            <c:if test="#{not empty clientController.client.idClient}">
                 <b:row >
                     <ui:include src="layout/dashboardMenu.xhtml"/>
                     <ui:include src="layout/dashboardContent.xhtml" />
                 </b:row>
-               
-            </b:container>
+            </c:if>
+            <c:if test="#{empty clientController.client.idClient}">
+                <h1>Vous n'êtes pas autorisé pour voir cette page, veuillez s'authentifier</h1>
+            </c:if>
+        </b:container>
 
-        </c:if>
-        <c:if test="#{empty clientController.client.idClient}">
-            <h1>you're not allowed to see that !</h1>
-        </c:if>
+
+
     </h:body>
 </html>
 
