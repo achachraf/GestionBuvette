@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style type="text/css">
+        .princ{
+        padding:5%;
+        margin:10%;
+        margin-top: 0%;
+        background: #f8f8f8;
+        }
+        #button{
+            background: #5bc0de;
+        }
+        #title{
+            margin-top:7%;
+            text-align: center;
+        }
+        </style>
+    </h:head>
+    <h:body>
+        <c:if test="#{empty adminController.admin.id}">
+            <h1 id="title">Buvette Ensat</h1>
+            <b:container class="princ">
+                <h:form styleClass="form-signin" prependId="false">
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                    <b:inputText id="email" placeholder="Email address" >
+                        <f:facet name="prepend">
+                            <b:icon name="user" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:inputText id="password" placeholder="Password" type="password">
+                        <f:facet name="prepend">
+                            <b:iconAwesome name="key" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:selectBooleanCheckbox value="true" caption="remember me"/>
+                    <b:commandButton id="button" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
+                </h:form>
+        </b:container>
+        </c:if>
+    </h:body>
+</html>
