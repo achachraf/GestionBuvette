@@ -11,17 +11,29 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.BootsFaces-OSP-1.4.2.jar}</file>
+                    <file>${file.reference.BootsFaces-OSP-1.4.2.jar-1}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${libs.javaee-api-7.0.classpath}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.mysql-connector-java-5.1.49-bin.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${libs.MySQLDriver.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries>
-                <library dirs="200">
-                    <file>${file.reference.BootsFaces-OSP-1.4.2.jar}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
                 <library dirs="100">
                     <file>${reference.GestionBuvette1-ejb.dist-ear}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.BootsFaces-OSP-1.4.2.jar-1}</file>
                     <path-in-war>/</path-in-war>
                 </library>
             </web-module-additional-libraries>

@@ -21,7 +21,6 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
-    
     <mime-mapping>
         <extension>ttf</extension>
         <mime-type>css/fonts</mime-type>
@@ -33,26 +32,27 @@
     <mime-mapping>
         <extension>woff2</extension>
         <mime-type>font/woff2</mime-type>
-    </mime-mapping>  
+    </mime-mapping>
     <mime-mapping>
         <extension>woff</extension>
         <mime-type>font/woff</mime-type>
-    </mime-mapping>  
+    </mime-mapping>
     <mime-mapping>
         <extension>eot</extension>
         <mime-type>application/vnd.ms-fontobject</mime-type>
     </mime-mapping>
-    
     <context-param>
         <param-name>BootsFaces_USETHEME</param-name>
         <param-value>true</param-value>
     </context-param>
-    
-    
     <context-param>
         <param-name>BootsFaces_THEME</param-name>
         <param-value>readable</param-value>
     </context-param>
-                 
-                 
+    <resource-ref>
+        <res-ref-name>jdbc/gestion_buvette</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
 </web-app>
