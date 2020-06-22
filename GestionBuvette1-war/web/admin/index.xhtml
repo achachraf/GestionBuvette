@@ -33,23 +33,24 @@ and open the template in the editor.
     <h:body>
         <c:if test="#{empty adminController.admin.id}">
             <h1 id="title">Buvette Ensat</h1>
+            <b:messages />
             <b:container class="princ">
                 <h:form styleClass="form-signin" prependId="false">
                     <h2 class="form-signin-heading">Please sign in</h2>
-                    <b:inputText id="email" placeholder="Email address" >
+                    <b:inputText id="email" placeholder="Email address" value="#{adminController.admin.username}">
                         <f:facet name="prepend">
                             <b:icon name="user" />
                         </f:facet>
                     </b:inputText>
-                    <b:inputText id="password" placeholder="Password" type="password">
+                    <b:inputText id="password" placeholder="Password" type="password" value="#{adminController.admin.password}">
                         <f:facet name="prepend">
                             <b:iconAwesome name="key" />
                         </f:facet>
                     </b:inputText>
                     <b:selectBooleanCheckbox value="true" caption="remember me"/>
-                    <b:commandButton id="button" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
+                    <b:commandButton id="button" action="#{adminController.login}" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
                 </h:form>
-        </b:container>
+            </b:container>
         </c:if>
     </h:body>
 </html>
