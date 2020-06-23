@@ -14,21 +14,7 @@ and open the template in the editor.
     <h:head>
         <title>Admin Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <style type="text/css">
-        .princ{
-        padding:5%;
-        margin:10%;
-        margin-top: 0%;
-        background: #f8f8f8;
-        }
-        #button{
-            background: #5bc0de;
-        }
-        #title{
-            margin-top:7%;
-            text-align: center;
-        }
-        </style>
+        <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
     </h:head>
     <h:body>
         <c:if test="#{empty adminController.admin.id}">
@@ -51,6 +37,23 @@ and open the template in the editor.
                     <b:commandButton id="button" action="#{adminController.login}" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
                 </h:form>
             </b:container>
+        </c:if>
+        <c:if test="#{not empty adminController.admin.id}">
+            <ui:include src="../layout/adminNav.xhtml"/>
+            <b:column col-md="10" class="dashboard-menu">
+                <b:column class="dashboard-card" col-md="5">
+                    <h5>Commandes à Servire</h5>
+                    <h:form>
+                        <b:dataTable value="#{consomationController.getConsomationServire()}" 
+                                     mark-search-results="false" paginated="false" searching="false" var="consomation">
+                            <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
+                            <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
+                            <b:dataTableColumn value="#{consomation.montant}"  />
+                        </b:dataTable>
+
+                    </h:form>
+                </b:column>
+            </b:column>
         </c:if>
     </h:body>
 </html>

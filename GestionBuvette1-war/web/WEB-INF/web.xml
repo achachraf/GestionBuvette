@@ -41,6 +41,7 @@
         <extension>eot</extension>
         <mime-type>application/vnd.ms-fontobject</mime-type>
     </mime-mapping>
+
     <context-param>
         <param-name>BootsFaces_USETHEME</param-name>
         <param-value>true</param-value>
@@ -55,4 +56,5 @@
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
+
 </web-app>

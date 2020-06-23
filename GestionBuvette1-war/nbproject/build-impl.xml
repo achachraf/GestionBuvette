@@ -1007,7 +1007,6 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.BootsFaces-OSP-1.4.2.jar-1}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.javaee-api-7.0.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.mysql-connector-java-5.1.49-bin.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${libs.MySQLDriver.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${reference.GestionBuvette1-ejb.dist-ear}" todir="${build.web.dir}//"/>
         <copyfiles files="${file.reference.BootsFaces-OSP-1.4.2.jar-1}" todir="${build.web.dir}//"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
@@ -1018,7 +1017,6 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.BootsFaces-OSP-1.4.2.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.javaee-api-7.0.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mysql-connector-java-5.1.49-bin.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${libs.MySQLDriver.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${reference.GestionBuvette1-ejb.dist-ear}" todir="${build.web.dir}//"/>
         <copyfiles files="${file.reference.BootsFaces-OSP-1.4.2.jar-1}" todir="${build.web.dir}//"/>
     </target>

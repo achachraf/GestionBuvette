@@ -168,4 +168,6 @@ public class Consomation implements Serializable {
         return "entities.Consomation[ idConsom=" + idConsom + " ]";
     }
     
+    
+    
 }

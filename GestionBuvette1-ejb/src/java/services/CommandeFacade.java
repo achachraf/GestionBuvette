@@ -6,9 +6,12 @@
 package services;
 
 import entities.Commande;
+import entities.Consomation;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -35,7 +38,6 @@ public class CommandeFacade extends AbstractFacade<Commande> {
         em.flush();
         em.refresh(entity);
     }
-    
-    
-    
+
+        
 }

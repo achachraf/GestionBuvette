@@ -6,6 +6,8 @@
 package services;
 
 import entities.Client;
+import entities.Consomation;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -54,6 +56,5 @@ public class ClientFacade extends AbstractFacade<Client> {
     }
     
     
-  
-    
+
 }

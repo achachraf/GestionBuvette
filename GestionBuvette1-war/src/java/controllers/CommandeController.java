@@ -6,10 +6,13 @@
 package controllers;
 
 import entities.Commande;
+import entities.Consomation;
 import entities.Plat;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
@@ -18,6 +21,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import services.CommandeFacade;
+import services.ConsomationFacade;
 
 /**
  *
@@ -106,5 +110,7 @@ public class CommandeController implements Serializable{
                         "Vous avez vidé votre panier ", null));
         return "cart.xhtml";
     }
+    
+
 
 }

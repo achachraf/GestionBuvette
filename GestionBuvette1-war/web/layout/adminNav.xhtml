@@ -1,0 +1,25 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:f = "http://java.sun.com/jsf/core"
+
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+<b:column col-md="2" class="dashboard-menu" id="navbar">
+                <b:form>
+                    <b:listLinks>
+                        <h2 style="color: #4582EC;">Buvette Ensat</h2><br/>
+                        <b:navLink href="/GestionBuvette1-war/admin/index.xhtml" value="Dashboard" icon="home"></b:navLink>
+                        <b:navLink href="" value="Consommations" icon="shopping-cart"></b:navLink>
+                        <b:navLink href="" value="Consommateurs" iconAwesome="group"></b:navLink>
+                        <b:navLink href="" value="Profile" icon="user"></b:navLink>
+                        <b:navCommandLink action="#{clientController.logout()}" value="Deconnexion" icon="log-out" />
+                    </b:listLinks>
+                </b:form>
+            </b:column>
+
+
+</ui:composition>
+

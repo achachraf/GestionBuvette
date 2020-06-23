@@ -6,6 +6,7 @@
 package services;
 
 import entities.Consomation;
+import entities.Plat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -49,8 +50,7 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
         List<Consomation> consomations = query.getResultList();
         return consomations;
     }
-    
-    
+   
     
 //    public List<Consomation> findInProgressConsomationsByClientId(Integer idClient){
 //        TypedQuery<Consomation> query = em.createQuery(
@@ -67,12 +67,24 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
 //       List<Consomation> consomations = new ArrayList<>();
 //       consomations.add(new Consomation())
 //   }
-
+//a
     @Override
     public void create(Consomation entity) {
         super.create(entity);
         em.flush();
         em.refresh(entity);
+    }
+    
+    public List<Consomation> getCommandesAServire() throws Exception{
+
+        
+        String queryString = "SELECT c FROM Consomation c where c.datePayement IS NOT NULL and c.datePrepa IS NULL";
+        TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
+        List<Consomation> consomationq = query.getResultList();
+        return consomationq;
+
+        
+        
     }
     
 }

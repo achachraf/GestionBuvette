@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -193,4 +195,7 @@ public class ClientController implements Serializable {
         
         return consomation.getMontant();
     }
+     
+     
+
 }

@@ -5,16 +5,21 @@
  */
 package controllers;
 
+import entities.Admin;
 import static entities.Category_.dateCreation;
 import entities.Client;
 import entities.Commande;
 import entities.Consomation;
+import entities.Plat;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -136,5 +141,18 @@ public class ConsomationController implements Serializable {
                 .collect(Collectors.toList());
         return consomations;
     }
+    
+    public List<Consomation> getConsomationServire(){
 
+        try {
+            List<Consomation> plats = consomationFacade.getCommandesAServire();
+            return plats;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
+        }
+    }
 }
