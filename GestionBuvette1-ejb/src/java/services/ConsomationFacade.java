@@ -75,16 +75,30 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
         em.refresh(entity);
     }
     
-    public List<Consomation> getCommandesAServire() throws Exception{
+    public List<Consomation> getConsomationAServire() throws Exception{
 
         
         String queryString = "SELECT c FROM Consomation c where c.datePayement IS NOT NULL and c.datePrepa IS NULL";
         TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
         List<Consomation> consomationq = query.getResultList();
-        return consomationq;
-
-        
-        
+        return consomationq;    
+    }
+    
+    public Consomation getConsomationId(int id) throws Exception{
+        String queryString = "SELECT c FROM Consomation c where c.idConsom = :id";
+        TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
+        query.setParameter("id", id);
+        Consomation consomationq = query.getSingleResult();
+        System.out.println(consomationq);
+        return consomationq;        
+    }
+    
+    public void marquerServis(int id) throws Exception{
+        String queryString = "SELECT c FROM Consomation c where c.idConsom = :id";
+        TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
+        query.setParameter("id", id);
+        Consomation consomationq = query.getSingleResult();
+        consomationq.setDatePrepa();
     }
     
 }

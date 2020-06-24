@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -123,6 +124,12 @@ public class Consomation implements Serializable {
         this.datePrepa = datePrepa;
     }
 
+    public void setDatePrepa() {
+        Date date= new Date();
+        this.datePrepa = date;
+    }
+    
+    
     @XmlTransient
     public List<Commande> getCommandeList() {
         return commandeList;

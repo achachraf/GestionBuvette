@@ -145,14 +145,39 @@ public class ConsomationController implements Serializable {
     public List<Consomation> getConsomationServire(){
 
         try {
-            List<Consomation> plats = consomationFacade.getCommandesAServire();
-            return plats;
+            List<Consomation> consomations = consomationFacade.getConsomationAServire();
+            return consomations;
         } catch (Exception e) {
             System.out.println("error in db : "+e.getLocalizedMessage());
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                            "Error 500","A server error has occured"));
             return null;
+        }
+    }
+    
+    public Consomation getConsomationById(int id){
+        try {
+            Consomation consomation = consomationFacade.getConsomationId(id);
+            return consomation;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
+        }
+    }
+    
+    public void marquerServis(int id)
+    {
+        try {
+            consomationFacade.marquerServis(id);
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
         }
     }
 }

@@ -110,7 +110,4 @@ public class CommandeController implements Serializable{
                         "Vous avez vidé votre panier ", null));
         return "cart.xhtml";
     }
-    
-
-
 }

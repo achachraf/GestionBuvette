@@ -10,13 +10,29 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Admin Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+        <style>
+            #javax_faces_developmentstage_messages
+            {
+                color:white;
+            }
+        </style>
+        <script>
+            function modal()
+            {
+                var url = window.location.href;
+                if(url.indexOf('?id') != -1) {
+                    $("#consomationDetails").modal();
+                }    
+            }
+        </script>
     </h:head>
-    <h:body>
+    <h:body onload="modal()">
         <c:if test="#{empty adminController.admin.id}">
             <h1 id="title">Buvette Ensat</h1>
             <b:messages />
@@ -39,21 +55,42 @@ and open the template in the editor.
             </b:container>
         </c:if>
         <c:if test="#{not empty adminController.admin.id}">
+            
             <ui:include src="../layout/adminNav.xhtml"/>
             <b:column col-md="10" class="dashboard-menu">
                 <b:column class="dashboard-card" col-md="5">
-                    <h5>Commandes à Servire</h5>
+                    <h5>Consomation à Servire</h5>
                     <h:form>
                         <b:dataTable value="#{consomationController.getConsomationServire()}" 
-                                     mark-search-results="false" paginated="false" searching="false" var="consomation">
-                            <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
+                                     mark-search-results="false" paginated="true" searching="false" var="consomation">
+                            <b:dataTableColumn  value="#{consomation.idConsom}"  label="Id Consomation"/>
                             <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
                             <b:dataTableColumn value="#{consomation.montant}"  />
+                            <b:dataTableColumn label="">
+                                <a class="btn btn-primary btn-sm" href="index.xhtml?id=#{consomation.idConsom}">Details</a>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn label="">
+                                <h:commandButton action="#{consomationController.marquerServis(consomation.idConsom)}">Marquer Servis</h:commandButton>
+                            </b:dataTableColumn>
+                            <c:set var="id" value="#{consomation.idConsom}"/>
                         </b:dataTable>
-
                     </h:form>
                 </b:column>
             </b:column>
         </c:if>
+
     </h:body>
+    
+    
+<b:modal id="consomationDetails" title="Consomation #{param['id']} Details" styleClass="consomationDetails">
+    <c:if test="#{not empty adminController.admin.id}">
+    <h:form>
+        <b:dataTable value="#{consomationController.getConsomationById(param['id']).commandeList}" 
+                     mark-search-results="false" paginated="true" searching="false" var="consomation">
+            <b:dataTableColumn value="#{consomation.idPlat.nomPlat}" label="Nom Plat"/>
+            <b:dataTableColumn value="#{consomation.quantite}" label="Quantité"/>
+        </b:dataTable>
+    </h:form>
+        </c:if>
+</b:modal>
 </html>
