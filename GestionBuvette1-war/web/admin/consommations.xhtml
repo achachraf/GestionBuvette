@@ -59,9 +59,9 @@ and open the template in the editor.
             <ui:include src="../layout/adminNav.xhtml"/>
             <b:column col-md="10">
                 <b:tabView active-index="0" >
-                    <b:tab title="Active ( #{clientController.getTopClients().size()} )">
+                    <b:tab title="Active ( #{consomationController.getConsomationServire().size()} )">
                         <h:form>
-                            <b:dataTable value="#{clientController.getTopClients()}" 
+                            <b:dataTable value="#{consomationController.getConsomationServire()}" 
                                          mark-search-results="false" paginated="true" searching="true" var="consomation">
                                 <b:dataTableColumn  value="#{consomation.idConsom}"  label="Id Consomation"/>
                                 <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
