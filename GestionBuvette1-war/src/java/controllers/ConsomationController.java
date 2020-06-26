@@ -158,8 +158,8 @@ public class ConsomationController implements Serializable {
     
     public Consomation getConsomationById(int id){
         try {
-            Consomation consomation = consomationFacade.getConsomationId(id);
-            return consomation;
+            Consomation consomatioq = consomationFacade.getConsomationId(id);
+            return consomatioq;
         } catch (Exception e) {
             System.out.println("error in db : "+e.getLocalizedMessage());
             FacesContext.getCurrentInstance().addMessage(null,
@@ -169,15 +169,43 @@ public class ConsomationController implements Serializable {
         }
     }
     
-    public void marquerServis(int id)
+    public String marquerServis(int id, String st)
     {
         try {
             consomationFacade.marquerServis(id);
+            return st;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getMessage());
+            return st;
+        }
+    }
+    
+    
+    public List<Consomation> getConsomationNonPaye(){
+
+        try {
+            List<Consomation> consomations = consomationFacade.getConsomationNonPaye();
+            return consomations;
         } catch (Exception e) {
             System.out.println("error in db : "+e.getLocalizedMessage());
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                            "Error 500","A server error has occured"));
+            return null;
+        }
+    }
+    
+    public List<Consomation> getConsomationServis(){
+
+        try {
+            List<Consomation> consomations = consomationFacade.getConsomationServis();
+            return consomations;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
         }
     }
 }

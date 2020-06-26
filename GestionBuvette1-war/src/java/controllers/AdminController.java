@@ -26,9 +26,9 @@ public class AdminController implements Serializable {
     private AdminFacade adminFacade;
 
     private Admin admin = new Admin();
-    /**
-     * Creates a new instance of AdminController
-     */
+    
+    private String ancien;
+    private String nouveau;
     
     public AdminController() {
     }
@@ -45,19 +45,65 @@ public class AdminController implements Serializable {
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
+
+    public String getAncien() {
+        return ancien;
+    }
+
+    public void setAncien(String ancien) {
+        this.ancien = ancien;
+    }
+
+    public String getNouveau() {
+        return nouveau;
+    }
+
+    public void setNouveau(String nouveau) {
+        this.nouveau = nouveau;
+    }
     
-    public String login(){
+    
+    
+    public String login(String st){
         Admin authAdmin = adminFacade.authAdmin(admin);
         if(authAdmin != null){
             admin = authAdmin;
-            return "/admin/index.xhtml";
+            return st;
         }
         else{
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
                             "incorrect username and password",
                             "Please enter correct username and password"));
-            return "/admin/index.xhtml";
+            return st;
         }
+    }
+    
+    public String changePassword()
+    {
+        if(admin.getPassword().equals(ancien))
+        {
+            admin.setPassword(this.nouveau);
+            this.adminFacade.edit(admin);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Mot de passe changed",
+                            ""));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "incorrect password",
+                            "Please enter correct password"));
+        }
+        
+        return "/admin/profile.xhtml";
+    }
+    
+    public String logout()
+    {
+        admin = new Admin();
+        return "/admin/index.xhtml";
     }
 }

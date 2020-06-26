@@ -5,7 +5,9 @@
  */
 package services;
 
+import entities.Commande;
 import entities.Plat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -51,6 +53,20 @@ public class PlatFacade extends AbstractFacade<Plat> {
         super.create(entity);
         em.flush();
         em.refresh(entity);
+    }
+    
+    
+    public List<Commande> getTopPlats() throws Exception{
+    //    List<Plat> plats = new ArrayList<Plat>();
+        String queryString = "SELECT c, SUM(c.quantite) as orders FROM Commande c GROUP BY c.idPlat ORDER BY orders desc";
+        TypedQuery<Object[]> query = em.createQuery(queryString, Object[].class).setMaxResults(5);
+        List<Object[]> commandes1 = query.getResultList();
+        List<Commande> commandes = new ArrayList<Commande>();
+        for (Object[] x : commandes1) {
+            Commande commande = (Commande)x[0];
+            commandes.add(commande);
+        }
+        return commandes;    
     }
     
     

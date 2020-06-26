@@ -56,5 +56,25 @@ public class ClientFacade extends AbstractFacade<Client> {
     }
     
     
-
+        public List<Client> getTopClients() throws Exception{
+        String queryString = "SELECT c FROM Client c WHERE c.active = 1 ORDER BY c.fidelite";
+        TypedQuery<Client> query = em.createQuery(queryString, Client.class).setMaxResults(5);
+        List<Client> clients = query.getResultList();
+        return clients;    
+    }
+        
+        public List<Client> getTopClientsNonActive() throws Exception{
+        String queryString = "SELECT c FROM Client c WHERE c.active = 0 ORDER BY c.fidelite";
+        TypedQuery<Client> query = em.createQuery(queryString, Client.class).setMaxResults(5);
+        List<Client> clients = query.getResultList();
+        return clients;    
+    }
+        
+        public List<Client> getTopClientstous() throws Exception{
+        String queryString = "SELECT c FROM Client c ORDER BY c.fidelite";
+        TypedQuery<Client> query = em.createQuery(queryString, Client.class).setMaxResults(5);
+        List<Client> clients = query.getResultList();
+        return clients;    
+    }
+    
 }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Consommateurs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+        <style>
+            #javax_faces_developmentstage_messages
+            {
+                color:white;
+            }
+        </style>
+        <script>
+            function modal()
+            {
+                var url = window.location.href;
+                if(url.indexOf('?id') != -1) {
+                    $("#consomationDetails").modal();
+                }    
+            }
+        </script>
+    </h:head>
+    <h:body onload="modal()">
+        <c:if test="#{empty adminController.admin.id}">
+            <h1 id="title">Buvette Ensat</h1>
+            <b:messages />
+            <b:container class="princ">
+                <h:form styleClass="form-signin" prependId="false">
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                    <b:inputText id="username" placeholder="username" value="#{adminController.admin.username}">
+                        <f:facet name="prepend">
+                            <b:icon name="user" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:inputText id="password" placeholder="Password" type="password" value="#{adminController.admin.password}">
+                        <f:facet name="prepend">
+                            <b:iconAwesome name="key" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:selectBooleanCheckbox value="true" caption="remember me"/>
+                    <b:commandButton id="button" action="#{adminController.login('/admin/consommateurs.xhtml')}" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
+                </h:form>
+            </b:container>
+        </c:if>
+        <c:if test="#{not empty adminController.admin.id}">
+            
+            <ui:include src="../layout/adminNav.xhtml"/>
+            <b:column col-md="10">
+                <b:tabView active-index="0" >
+                    <b:tab title="Active ( #{clientController.getTopClients().size()} )">
+                        <h:form>
+                            <b:dataTable value="#{clientController.getTopClients()}" 
+                                     mark-search-results="false" paginated="false" searching="false" var="client">
+                                <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
+                                <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
+                                <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
+                            </b:dataTable>
+                        </h:form>
+                    </b:tab>
+                    <b:tab title="Non Active ( #{clientController.getTopClientsNonActive().size()} )">
+                        <h:form>
+                            <b:dataTable value="#{clientController.getTopClientsNonActive()}" 
+                                     mark-search-results="false" paginated="false" searching="false" var="client">
+                                <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
+                                <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
+                                <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
+                            </b:dataTable>
+                        </h:form>
+                    </b:tab>
+                    <b:tab title="Tous ( #{clientController.getTopClientstous().size()} )">
+                        <h:form>
+                            <b:dataTable value="#{clientController.getTopClientstous()}" 
+                                     mark-search-results="false" paginated="false" searching="false" var="client">
+                                <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
+                                <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
+                                <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
+                            </b:dataTable>
+                        </h:form>
+                    </b:tab>
+
+                </b:tabView>
+            </b:column>
+            
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ajouter">Ajouter Consommateur</button>
+        </c:if>
+
+    </h:body>
+    
+
+    <b:modal id="ajouter" title="Ajouter Consommateur" styleClass="ajouter">
+        <c:if test="#{not empty adminController.admin.id}">
+            <h:form styleClass="form-signin" prependId="false">
+                <b:inputText id="username" placeholder="username" value="#{clientController.client.username}">
+                </b:inputText>
+                <b:inputText id="password" placeholder="Password" type="password" value="#{clientController.client.password}">
+                </b:inputText>
+                <b:inputText id="nom" placeholder="Nom" value="#{clientController.client.nom}">
+                </b:inputText>
+                <b:inputText id="prenom" placeholder="prenom" value="#{clientController.client.prenom}">
+                </b:inputText>
+                <b:commandButton id="button" action="#{clientController.signin()}" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
+            </h:form>
+        </c:if>
+    </b:modal>
+</html>

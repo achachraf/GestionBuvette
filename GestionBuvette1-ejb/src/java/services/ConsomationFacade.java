@@ -101,4 +101,19 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
         consomationq.setDatePrepa();
     }
     
+    public List<Consomation> getConsomationNonPaye() throws Exception{
+
+        
+        String queryString = "SELECT c FROM Consomation c where c.datePayement IS NULL";
+        TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
+        List<Consomation> consomationq = query.getResultList();
+        return consomationq;    
+    }
+    
+    public List<Consomation> getConsomationServis() throws Exception{
+        String queryString = "SELECT c FROM Consomation c where c.datePayement IS NOT NULL and c.datePrepa IS NOT NULL";
+        TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
+        List<Consomation> consomationq = query.getResultList();
+        return consomationq;    
+    }
 }

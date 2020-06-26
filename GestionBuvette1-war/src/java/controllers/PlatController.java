@@ -128,6 +128,18 @@ public class PlatController implements Serializable {
         return plats;
     }
     
-    
+    public List<Commande> getTopPlats(){
+        try {
+            List<Commande> plats = platFacade.getTopPlats();
+            return plats;
+        } catch (Exception e) {
+            System.out.println("mlkh");
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
+        }
+    }
     
 }

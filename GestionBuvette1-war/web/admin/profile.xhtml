@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Admin Profile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+
+    </h:head>
+    <h:body>
+        <c:if test="#{empty adminController.admin.id}">
+            <h1 id="title">Buvette Ensat</h1>
+            <b:messages />
+            <b:container class="princ">
+                <h:form styleClass="form-signin" prependId="false">
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                    <b:inputText id="username" placeholder="Username" value="#{adminController.admin.username}">
+                        <f:facet name="prepend">
+                            <b:icon name="user" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:inputText id="password" placeholder="Password" type="password" value="#{adminController.admin.password}">
+                        <f:facet name="prepend">
+                            <b:iconAwesome name="key" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:selectBooleanCheckbox value="true" caption="remember me"/>
+                    <b:commandButton id="button" action="#{adminController.login('/admin/profile.xhtml')}" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
+                </h:form>
+            </b:container>
+        </c:if>
+        <c:if test="#{not empty adminController.admin.id}">
+            
+            <ui:include src="../layout/adminNav.xhtml"/>
+            <b:column col-md="10" class="dashboard-menu">
+                <b:row style="margin-bottom: 10px;">
+                    <b:messages />
+                <b:column class="dashboard-card" col-md="9">
+                    <h5>Changer Mot de Passe</h5>
+                    <h:form>
+                        <b:inputText id="ancien" placeholder="Ancien Mot de passe" type="password" value="#{adminController.ancien}">
+                        </b:inputText>
+                        <b:inputText id="nouveau" placeholder="Nouveau mot de passe" type="password" value="#{adminController.nouveau}">
+                        </b:inputText>
+                        <b:commandButton id="button" action="#{adminController.changePassword()}" look="primary btn-block" value="Changer le mot de passe" size="md"/>
+                    </h:form>
+                </b:column>
+                </b:row>
+                
+            </b:column>
+        </c:if>
+
+    </h:body>
+    
+    
+</html>

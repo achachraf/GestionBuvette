@@ -39,7 +39,7 @@ and open the template in the editor.
             <b:container class="princ">
                 <h:form styleClass="form-signin" prependId="false">
                     <h2 class="form-signin-heading">Please sign in</h2>
-                    <b:inputText id="email" placeholder="Email address" value="#{adminController.admin.username}">
+                    <b:inputText id="username" placeholder="Username" value="#{adminController.admin.username}">
                         <f:facet name="prepend">
                             <b:icon name="user" />
                         </f:facet>
@@ -50,7 +50,7 @@ and open the template in the editor.
                         </f:facet>
                     </b:inputText>
                     <b:selectBooleanCheckbox value="true" caption="remember me"/>
-                    <b:commandButton id="button" action="#{adminController.login}" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
+                    <b:commandButton id="button" action="#{adminController.login('/admin/index.xhtml')}" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
                 </h:form>
             </b:container>
         </c:if>
@@ -58,7 +58,8 @@ and open the template in the editor.
             
             <ui:include src="../layout/adminNav.xhtml"/>
             <b:column col-md="10" class="dashboard-menu">
-                <b:column class="dashboard-card" col-md="5">
+                <b:row style="margin-bottom: 10px;">
+                <b:column class="dashboard-card" col-md="9">
                     <h5>Consomation à Servire</h5>
                     <h:form>
                         <b:dataTable value="#{consomationController.getConsomationServire()}" 
@@ -70,9 +71,31 @@ and open the template in the editor.
                                 <a class="btn btn-primary btn-sm" href="index.xhtml?id=#{consomation.idConsom}">Details</a>
                             </b:dataTableColumn>
                             <b:dataTableColumn label="">
-                                <h:commandButton action="#{consomationController.marquerServis(consomation.idConsom)}">Marquer Servis</h:commandButton>
+                                <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/index.xhtml')}" value="Marquer Servis"></h:commandButton>
                             </b:dataTableColumn>
                             <c:set var="id" value="#{consomation.idConsom}"/>
+                        </b:dataTable>
+                    </h:form>
+                </b:column>
+                </b:row>
+                <b:column class="dashboard-card" col-md="4">
+                    <h5>Top plats commandés</h5>
+                    <h:form>
+                        <b:dataTable value="#{platController.getTopPlats()}" 
+                                     mark-search-results="false" paginated="false" searching="false" var="plat">
+                            <b:dataTableColumn  value="#{plat.idPlat.nomPlat}"  label="Plat"/>
+                        </b:dataTable>
+                    </h:form>
+                </b:column>
+                <b:column class="dashboard-card" col-md="2"></b:column>
+                <b:column class="dashboard-card" col-md="4">
+                    <h5>Top clients</h5>
+                    <h:form>
+                        <b:dataTable value="#{clientController.getTopClients()}" 
+                                     mark-search-results="false" paginated="false" searching="false" var="client">
+                            <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
+                            <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
+                            <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
                         </b:dataTable>
                     </h:form>
                 </b:column>

@@ -196,6 +196,52 @@ public class ClientController implements Serializable {
         return consomation.getMontant();
     }
      
+    public List<Client> getTopClients(){
+        try {
+            List<Client> clients = clientFacade.getTopClients();
+            return clients;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
+        }
+    }
+    
+    public List<Client> getTopClientsNonActive(){
+        try {
+            List<Client> clients = clientFacade.getTopClientsNonActive();
+            return clients;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
+        }
+    }
+    
+    public List<Client> getTopClientstous(){
+        try {
+            List<Client> clients = clientFacade.getTopClientstous();
+            return clients;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
+        }
+    }
      
+    public String signin(){
+        Date date=new Date();
+        this.client.setActive(1);
+        this.client.setDateCreation(date);
+        this.client.setFidelite((float)0);
+        this.clientFacade.create(this.client);
+        return "/admin/consommateurs.xhtml";
+    }
 
 }
