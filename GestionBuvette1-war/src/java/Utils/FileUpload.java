@@ -27,7 +27,7 @@ import javax.servlet.http.Part;
 public class FileUpload implements Serializable  {
 
     private Part uploadedFile;
-    private String folder = "C:\\Users\\achra\\Documents\\NetBeansProjects\\GestionBuvette1\\GestionBuvette1-war\\web\\resources\\uploads";
+    private String folder = "C:\\Users\\Zbakh\\Documents\\JEE\\GestionBuvette\\GestionBuvette1-war\\web\\resources\\uploads";
 
     public FileUpload() {
     }
@@ -58,6 +58,19 @@ public class FileUpload implements Serializable  {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public String saveFile(Part uploadedFile) {
+        System.out.println(uploadedFile);
+        try (InputStream input = uploadedFile.getInputStream()) {
+            String extension = getFileExtension(uploadedFile.getSubmittedFileName());
+            String fileName = getRandomString() + "." + extension;
+            Files.copy(input, new File(folder, fileName).toPath());
+            return fileName;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+        
     }
     public String getRandomString() {
         int leftLimit = 97; // letter 'a'

@@ -71,7 +71,7 @@ and open the template in the editor.
                                 <a class="btn btn-primary btn-sm" href="index.xhtml?id=#{consomation.idConsom}">Details</a>
                             </b:dataTableColumn>
                             <b:dataTableColumn label="">
-                                <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/index.xhtml')}" value="Marquer Servis"></h:commandButton>
+                                <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/index.xhtml')}" value="Marquer Préparé"></h:commandButton>
                             </b:dataTableColumn>
                             <c:set var="id" value="#{consomation.idConsom}"/>
                         </b:dataTable>

@@ -59,29 +59,46 @@ and open the template in the editor.
             <ui:include src="../layout/adminNav.xhtml"/>
             <b:column col-md="10">
                 <b:tabView active-index="0" >
-                    <b:tab title="Active ( #{consomationController.getConsomationServire().size()} )">
+                    <b:tab title="A préparer ( #{consomationController.getConsomationServire().size()} )">
                         <h:form>
                             <b:dataTable value="#{consomationController.getConsomationServire()}" 
                                          mark-search-results="false" paginated="true" searching="true" var="consomation">
                                 <b:dataTableColumn  value="#{consomation.idConsom}"  label="Id Consomation"/>
                                 <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
                                 <b:dataTableColumn value="#{consomation.montant}"  />
+                                <c:if test="#{not empty consomation.datePayement}">
+                                    <b:dataTableColumn value="Payé" label=""  />
+                                </c:if>
+                                <c:if test="#{empty consomation.datePayement}">
+                                    <b:dataTableColumn value="Non Payé" label=""  />
+                                </c:if>
                                 <b:dataTableColumn label="">
                                     <a class="btn btn-primary btn-sm" href="consommations.xhtml?id=#{consomation.idConsom}">Details</a>
                                 </b:dataTableColumn>
                                 <b:dataTableColumn label="">
-                                    <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/consommations.xhtml')}" value="Marquer Servis"></h:commandButton>
+                                    <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/consommations.xhtml')}" value="Marquer Préparé"></h:commandButton>
                                 </b:dataTableColumn>
                                 <c:set var="id" value="#{consomation.idConsom}"/>
                             </b:dataTable>
                         </h:form>
                     </b:tab>
-                    <b:tab title="Non payé ( #{consomationController.getConsomationNonPaye().size()} )">
-                            <b:dataTable value="#{consomationController.getConsomationNonPaye()}" var="consomation">
+                    <b:tab title="Préparé ( #{consomationController.getConsomationPrepare().size()} )">
+                        <h:form>
+                            <b:dataTable value="#{consomationController.getConsomationPrepare()}" var="consomation">
                                 <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
                                 <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
                                 <b:dataTableColumn value="#{consomation.montant}" label="Montant"  />
+                                <c:if test="#{not empty consomation.datePayement}">
+                                    <b:dataTableColumn value="Payé" label=""  />
+                                </c:if>
+                                <c:if test="#{empty consomation.datePayement}">
+                                    <b:dataTableColumn value="Non Payé" label=""  />
+                                </c:if>
+                                <b:dataTableColumn label="">
+                                    <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerPaye(consomation.idConsom,'/admin/consommations.xhtml')}" value="Marquer Payé"></h:commandButton>
+                                </b:dataTableColumn>
                             </b:dataTable>
+                        </h:form>
                     </b:tab>
                     <b:tab title="Servis ( #{consomationController.getConsomationServis().size()} )">
                             <b:dataTable value="#{consomationController.getConsomationServis()}" var="consomation">

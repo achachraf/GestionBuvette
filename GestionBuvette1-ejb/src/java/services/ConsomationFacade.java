@@ -78,7 +78,7 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
     public List<Consomation> getConsomationAServire() throws Exception{
 
         
-        String queryString = "SELECT c FROM Consomation c where c.datePayement IS NOT NULL and c.datePrepa IS NULL";
+        String queryString = "SELECT c FROM Consomation c where c.datePrepa IS NULL";
         TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
         List<Consomation> consomationq = query.getResultList();
         return consomationq;    
@@ -101,10 +101,10 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
         consomationq.setDatePrepa();
     }
     
-    public List<Consomation> getConsomationNonPaye() throws Exception{
+    public List<Consomation> getConsomationPrepare() throws Exception{
 
         
-        String queryString = "SELECT c FROM Consomation c where c.datePayement IS NULL";
+        String queryString = "SELECT c FROM Consomation c where c.datePrepa IS NOT NULL";
         TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
         List<Consomation> consomationq = query.getResultList();
         return consomationq;    
@@ -115,5 +115,13 @@ public class ConsomationFacade extends AbstractFacade<Consomation> {
         TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
         List<Consomation> consomationq = query.getResultList();
         return consomationq;    
+    }
+    
+    public void marquerPaye(int id) throws Exception{
+        String queryString = "SELECT c FROM Consomation c where c.idConsom = :id";
+        TypedQuery<Consomation> query = em.createQuery(queryString, Consomation.class);
+        query.setParameter("id", id);
+        Consomation consomationq = query.getSingleResult();
+        consomationq.setDatePayement();
     }
 }

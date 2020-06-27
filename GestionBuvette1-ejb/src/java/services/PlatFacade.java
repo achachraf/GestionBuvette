@@ -69,5 +69,12 @@ public class PlatFacade extends AbstractFacade<Plat> {
         return commandes;    
     }
     
+    public List<Plat> getAllPlats() throws Exception{
+        String queryString = "SELECT c FROM Plat c";
+        TypedQuery<Plat> query = em.createQuery(queryString, Plat.class);
+        List<Plat> plats = query.getResultList();
+
+        return plats;    
+    }
     
 }

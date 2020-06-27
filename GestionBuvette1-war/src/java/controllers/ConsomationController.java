@@ -181,10 +181,10 @@ public class ConsomationController implements Serializable {
     }
     
     
-    public List<Consomation> getConsomationNonPaye(){
+    public List<Consomation> getConsomationPrepare(){
 
         try {
-            List<Consomation> consomations = consomationFacade.getConsomationNonPaye();
+            List<Consomation> consomations = consomationFacade.getConsomationPrepare();
             return consomations;
         } catch (Exception e) {
             System.out.println("error in db : "+e.getLocalizedMessage());
@@ -206,6 +206,17 @@ public class ConsomationController implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                            "Error 500","A server error has occured"));
             return null;
+        }
+    }
+    
+    public String marquerPaye(int id, String st)
+    {
+        try {
+            consomationFacade.marquerPaye(id);
+            return st;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getMessage());
+            return st;
         }
     }
 }

@@ -115,6 +115,11 @@ public class Consomation implements Serializable {
     public void setDatePayement(Date datePayement) {
         this.datePayement = datePayement;
     }
+    
+    public void setDatePayement() {
+        Date date= new Date();
+        this.datePayement = date;
+    }
 
     public Date getDatePrepa() {
         return datePrepa;

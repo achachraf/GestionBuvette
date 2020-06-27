@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+        <script>
+            function modal()
+            {
+                    $("#UpdatePlat").modal(); 
+            }
+        </script>
+    </h:head>
+    <h:body onload="modal()">
+        <c:if test="#{empty adminController.admin.id}">
+            <h1 id="title">Buvette Ensat</h1>
+            <b:messages />
+            <b:container class="princ">
+                <h:form styleClass="form-signin" prependId="false">
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                    <b:inputText id="username" placeholder="Username" value="#{adminController.admin.username}">
+                        <f:facet name="prepend">
+                            <b:icon name="user" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:inputText id="password" placeholder="Password" type="password" value="#{adminController.admin.password}">
+                        <f:facet name="prepend">
+                            <b:iconAwesome name="key" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:selectBooleanCheckbox value="true" caption="remember me"/>
+                    <b:commandButton id="button" action="#{adminController.login('/admin/plats.xhtml')}" look="primary btn-block" value="Sign In" icon="log-in" size="lg"/>
+                </h:form>
+            </b:container>
+        </c:if>
+        <c:if test="#{not empty adminController.admin.id}">
+            
+            <ui:include src="../layout/adminNav.xhtml"/>
+            <b:column col-md="10" class="dashboard-menu">
+                <b:row style="margin-bottom: 10px;">
+                <b:column class="dashboard-card" col-md="9">
+                    <h5>Tous les plats</h5>
+                    <h:form>
+                        <b:dataTable value="#{platController.getAllPlats()}" 
+                                     mark-search-results="false" paginated="true" searching="false" var="plat">
+                            <b:dataTableColumn  value="#{plat.idPlat}"  label="Id Plat"/>
+                            <b:dataTableColumn value="#{plat.nomPlat}" label="Date de Creation" />
+                            <b:dataTableColumn value="#{plat.prix}"  label="Prix"/>
+                            <b:dataTableColumn value="#{plat.idCat.nom}"  label="Category"/>
+                            <b:dataTableColumn value="#{plat.valable}"  label="Valable"/>
+                            <b:dataTableColumn label="">
+                                <h:commandButton value="Modifier" onclick="modal();">
+                                    <f:setPropertyActionListener value="#{plat}" target="#{platController.selectedPlat}"/>
+                                </h:commandButton>
+                            </b:dataTableColumn>
+                            <b:dataTableColumn label="">
+                                <h:commandButton class="btn btn-danger btn-sm" action="#{platController.delete(plat)}" value="Supprimer"></h:commandButton>
+                            </b:dataTableColumn>
+                            <c:set var="id" value="#{consomation.idConsom}"/>
+                        </b:dataTable>
+                    </h:form>
+                </b:column>
+                </b:row>
+                
+            </b:column>
+        </c:if>
+
+    </h:body>
+    
+            <c:if test="#{not empty platController.selectedPlat.idPlat}">
+    <b:modal id="UpdatePlat" title="Plat #{platController.selectedPlat.idPlat}" styleClass="UpdatePlat">
+    <c:if test="#{not empty adminController.admin.id}">
+
+        <h:form styleClass="form-signin" prependId="false"  enctype="multipart/form-data">
+            <b:inputText id="Nom" placeholder="Nom" value="#{platController.selectedPlat.nomPlat}" required="true" label="Nom:">
+            </b:inputText>
+            <b:inputText id="Prix" placeholder="Prix" value="#{platController.selectedPlat.prix}" required="true" label="Prix:">
+            </b:inputText>
+            <b:selectOneMenu value="#{platController.selectedPlat.idCat}" required="true" label="Select category:"
+                     select2="true">
+                <c:forEach items="#{categoriesController.categories}" var="categorie">
+                    <f:selectItem itemLabel="#{categorie.nom}" itemValue="#{categorie}" />
+                </c:forEach>
+            </b:selectOneMenu>
+            <b:selectOneMenu value="#{platController.selectedPlat.valable}" required="true" label="Valabilité:"
+                     select2="true">
+                    <f:selectItem itemLabel="valable" itemValue="1" />
+                    <f:selectItem itemLabel="unvalable" itemValue="0" />
+            </b:selectOneMenu>
+            <h:inputFile value="#{platController.uploadedFile}"/><br/>
+            <b:commandButton id="button" action="#{platController.update()}" look="primary btn-block" value="Modifier" icon="log-in" size="lg">
+            </b:commandButton>
+        </h:form>
+    </c:if>
+</b:modal></c:if>
+</html>

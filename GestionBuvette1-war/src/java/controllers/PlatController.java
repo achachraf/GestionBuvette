@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import Utils.FileUpload;
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.emptyType;
 import entities.Commande;
 import entities.Plat;
@@ -19,6 +20,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 import services.PlatFacade;
 
 /**
@@ -37,10 +39,28 @@ public class PlatController implements Serializable {
     PlatFacade platFacade;
     
     private Plat plat = new Plat();
-    
+    private Plat selectedPlat;
     private boolean redirection = false;
+    private Part uploadedFile;
+    FileUpload fileUpload = new FileUpload();
     
     public PlatController() {
+    }
+
+    public Part getUploadedFile() {
+        return uploadedFile;
+    }
+
+    public void setUploadedFile(Part uploadedFile) {
+        this.uploadedFile = uploadedFile;
+    }
+
+    public Plat getSelectedPlat() {
+        return selectedPlat;
+    }
+
+    public void setSelectedPlat(Plat selectedPlat) {
+        this.selectedPlat = selectedPlat;
     }
 
     public Plat getPlat() {
@@ -133,7 +153,6 @@ public class PlatController implements Serializable {
             List<Commande> plats = platFacade.getTopPlats();
             return plats;
         } catch (Exception e) {
-            System.out.println("mlkh");
             System.out.println("error in db : "+e.getLocalizedMessage());
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -142,4 +161,30 @@ public class PlatController implements Serializable {
         }
     }
     
+    public List<Plat> getAllPlats(){
+        try {
+            List<Plat> plats = platFacade.getAllPlats();
+            return plats;
+        } catch (Exception e) {
+            System.out.println("error in db : "+e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","A server error has occured"));
+            return null;
+        }
+    }
+    
+    public String delete(Plat a){
+        this.platFacade.remove(a);
+        return "/admin/plats.xhtml";
+    }
+    
+    public String update()
+    {
+        if(uploadedFile != null){
+            selectedPlat.setImage(fileUpload.saveFile(uploadedFile));
+        }
+        this.platFacade.edit(this.selectedPlat);
+        return "/admin/plats.xhtml";
+    }
 }
