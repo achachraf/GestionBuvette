@@ -12,6 +12,7 @@ import entities.Plat;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
@@ -185,6 +186,17 @@ public class PlatController implements Serializable {
             selectedPlat.setImage(fileUpload.saveFile(uploadedFile));
         }
         this.platFacade.edit(this.selectedPlat);
+        selectedPlat = new Plat();
         return "/admin/plats.xhtml";
     }
+    
+    public String ajouter(){
+        selectedPlat = new Plat();
+        if(uploadedFile != null){
+            plat.setImage(fileUpload.saveFile(uploadedFile));
+        } 
+        this.platFacade.create(this.plat);
+        return "/admin/plats.xhtml";
+    }
+
 }
