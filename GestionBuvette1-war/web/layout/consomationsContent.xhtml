@@ -7,7 +7,7 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
         
-    <b:column col-md="10" style="margin-top: 30px">
+    <b:column col-md="10" offset-md="2" offset-sm="3" offset-xs="5" style="margin-top: 30px">
         <ui:param value="#{consomationController.getInProgressConsomations(clientController.client)}" name="inProgress" />
         <ui:param value="#{consomationController.getNonPaidClientConsomations(clientController.client)}" name="nonPaid" />
         <ui:param value="#{consomationController.getPaidConsomations(clientController.client)}" name="paid" />

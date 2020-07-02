@@ -16,10 +16,12 @@ and open the template in the editor.
         <title>Plats</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+        <h:outputStylesheet library="css" name="styles.css" />
         <script>
             function modal()
             {
-                    $("#UpdatePlat").modal(); 
+                console.log("dkhal")
+                $("#UpdatePlat").modal();
             }
         </script>
     </h:head>
@@ -46,44 +48,53 @@ and open the template in the editor.
             </b:container>
         </c:if>
         <c:if test="#{not empty adminController.admin.id}">
-            
-            <ui:include src="../layout/adminNav.xhtml"/>
-            <b:column col-md="10" class="dashboard-menu">
-                <b:row style="margin-bottom: 10px;">
-                <b:column class="dashboard-card" col-md="9">
-                    <h5>Tous les plats</h5>
-                    <h:form>
-                        <b:dataTable value="#{platController.getAllPlats()}" 
-                                     mark-search-results="false" paginated="true" searching="false" var="plat">
-                            <b:dataTableColumn  value="#{plat.idPlat}"  label="Id Plat"/>
-                            <b:dataTableColumn value="#{plat.nomPlat}" label="Date de Creation" />
-                            <b:dataTableColumn value="#{plat.prix}"  label="Prix"/>
-                            <b:dataTableColumn value="#{plat.idCat.nom}"  label="Category"/>
-                            <b:dataTableColumn value="#{plat.valable}"  label="Valable"/>
-                            <b:dataTableColumn label="">
-                                <h:commandButton value="Modifier" onclick="modal();">
-                                    <f:setPropertyActionListener value="#{plat}" target="#{platController.selectedPlat}"/>
-                                </h:commandButton>
-                            </b:dataTableColumn>
-                            <b:dataTableColumn label="">
-                                <h:commandButton class="btn btn-danger btn-sm" action="#{platController.delete(plat)}" value="Supprimer"></h:commandButton>
-                            </b:dataTableColumn>
-                            <c:set var="id" value="#{consomation.idConsom}"/>
-                        </b:dataTable>
+            <b:row class="dashboard-body">
+                <ui:include src="../layout/adminNav.xhtml"/>
+                <h1 style="text-align: center; margin: 4% 0 0 13%">Gestion des plats</h1>
+                <b:column  col-md="10" offset-md="3" offset-sm="3" offset-xs="5" >
+                    <b:row class="dashboard-cards-row" style="margin-bottom: 10px;">
+                        <b:column class="dashboard-card" col-md="9">
+                            <h5>Tous les plats</h5>
+                            <h:form>
+                                <b:dataTable value="#{platController.getAllPlats()}" 
+                                             mark-search-results="false" paginated="true" searching="false" var="plat">
+                                    <b:dataTableColumn  value="#{plat.idPlat}"  label="Id Plat"/>
+                                    <b:dataTableColumn value="#{plat.nomPlat}" label="Date de Creation" />
+                                    <b:dataTableColumn value="#{plat.prix}"  label="Prix"/>
+                                    <b:dataTableColumn value="#{plat.idCat.nom}"  label="Category"/>
+                                    <b:dataTableColumn value="#{plat.valable}"  label="Valable"/>
+                                    <b:dataTableColumn label="Modifier">
+                                        <b:commandButton value="Modifier" look="warning" >
+                                            <f:setPropertyActionListener value="#{plat}" target="#{platController.selectedPlat}"/>
+                                        </b:commandButton>
+                                    </b:dataTableColumn>
+                                    <b:dataTableColumn label="Supprimer">
+                                        <b:commandButton look="danger" action="#{platController.delete(plat)}" value="Supprimer"></b:commandButton>
+                                    </b:dataTableColumn>
+                                    <c:set var="id" value="#{consomation.idConsom}"/>
+                                </b:dataTable>
+                            </h:form>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <b:column col-md="6" offset-md="2" >
+                            <button style="width: 100%" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ajouter">Ajouter Plat</button>
+                        </b:column>
+                    </b:row>
+                    <h:form id="updateForm">
+                        <h:commandButton class="hdBtn" value="init" action="#{platController.initPlat()}" style="display:none"  />
                     </h:form>
                 </b:column>
-                </b:row>
-                
-            </b:column>
-            <div>
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ajouter">Ajouter Plat</button>
-            </div>
+
+            </b:row>
+
         </c:if>
 
     </h:body>
-    
-   <c:if test="#{not empty platController.selectedPlat.idPlat}">
-        <b:modal id="UpdatePlat" title="Plat #{platController.selectedPlat.idPlat}" styleClass="UpdatePlat">
+
+    <c:if test="#{not empty platController.selectedPlat.idPlat}">
+        <b:modal id="UpdatePlat" title="Plat #{platController.selectedPlat.idPlat}" styleClass="UpdatePlat"
+                 closable="false" close-on-escape="false">
             <c:if test="#{not empty adminController.admin.id}">
                 <h:form styleClass="form-signin" prependId="false"  enctype="multipart/form-data">
                     <b:inputText id="Nom" placeholder="Nom" value="#{platController.selectedPlat.nomPlat}" required="true" label="Nom:">
@@ -91,46 +102,91 @@ and open the template in the editor.
                     <b:inputText id="Prix" placeholder="Prix" value="#{platController.selectedPlat.prix}" required="true" label="Prix:">
                     </b:inputText>
                     <b:selectOneMenu value="#{platController.selectedPlat.idCat}" required="true" label="Select category:"
-                             select2="true">
+                                     select2="true">
                         <c:forEach items="#{categoriesController.categories}" var="categorie">
                             <f:selectItem itemLabel="#{categorie.nom}" itemValue="#{categorie}" />
                         </c:forEach>
                     </b:selectOneMenu>
                     <b:selectOneMenu value="#{platController.selectedPlat.valable}" required="true" label="Valabilité:"
-                             select2="true">
-                            <f:selectItem itemLabel="valable" itemValue="1" />
-                            <f:selectItem itemLabel="unvalable" itemValue="0" />
+                                     select2="true">
+                        <f:selectItem itemLabel="valable" itemValue="1" />
+                        <f:selectItem itemLabel="unvalable" itemValue="0" />
                     </b:selectOneMenu>
-                    <h:inputFile value="#{platController.uploadedFile}"/><br/>
+                    <h:inputFile class="imgInp" /><br/>
+                    <img src="../resources/uploads/#{platController.selectedPlat.image}" class="img"
+                         style="width:100%;height: 400px;margin-bottom: 20px" />
                     <b:commandButton action="#{platController.update()}" look="primary btn-block" value="Modifier" size="lg">
                     </b:commandButton>
                 </h:form>
+                
             </c:if>
         </b:modal>
-   </c:if>
-    
-     <b:modal id="ajouter" title="Ajouter Plat" styleClass="ajouter">
+    </c:if>
+
+    <b:modal id="ajouter" title="Ajouter Plat" styleClass="ajouter">
         <c:if test="#{not empty adminController.admin.id}">
-            <h:form styleClass="form-signin" prependId="false"  enctype="multipart/form-data">
-                <b:inputText placeholder="Nom" value="#{platController.plat.nomPlat}" required="true" label="Nom:">
-                    </b:inputText>
-                    <b:inputText placeholder="Prix" value="#{platController.plat.prix}" required="true" label="Prix:">
-                    </b:inputText>
-                    <b:selectOneMenu value="#{platController.plat.idCat}" required="true" label="Select category:"
-                             select2="true">
-                        <c:forEach items="#{categoriesController.categories}" var="categorie">
-                            <f:selectItem itemLabel="#{categorie.nom}" itemValue="#{categorie}" />
-                        </c:forEach>
-                    </b:selectOneMenu>
-                    <b:selectOneMenu value="#{platController.plat.valable}" required="true" label="Valabilité:"
-                             select2="true">
-                            <f:selectItem itemLabel="valable" itemValue="1" />
-                            <f:selectItem itemLabel="unvalable" itemValue="0" />
-                    </b:selectOneMenu>
-                    <h:inputFile value="#{platController.uploadedFile}"/><br/>
-                    <b:commandButton id="button" action="#{platController.ajouter()}" look="primary btn-block" value="Ajouter" size="lg">
-                    </b:commandButton>
-                </h:form>
+            <h:form id="ajouterForm" styleClass="form-signin" prependId="false"  enctype="multipart/form-data">
+                <b:messages />
+                <b:inputText placeholder="Nom" value="#{platController.plat.nomPlat}" 
+                             required="true" required-message="Le nom est requis" label="Nom:">
+                </b:inputText>
+                <b:inputText placeholder="Prix" value="#{platController.plat.prix}" 
+                             required="true" required-message="Le Prix est requis" label="Prix:">
+                </b:inputText>
+                <b:selectOneMenu value="#{platController.plat.idCat}" required="true" label="Select category:"
+                                 select2="true">
+                    <c:forEach items="#{categoriesController.categories}" var="categorie">
+                        <f:selectItem itemLabel="#{categorie.nom}" itemValue="#{categorie}" />
+                    </c:forEach>
+                </b:selectOneMenu>
+                <b:selectOneMenu value="#{platController.plat.valable}" required="true" label="Valabilité:"
+                                 select2="true">
+                    <f:selectItem itemLabel="valable" itemValue="1" />
+                    <f:selectItem itemLabel="unvalable" itemValue="0" />
+                </b:selectOneMenu>
+                <h:inputFile class="imgInp" value="#{platController.uploadedFile}"/><br/>
+                <img class="img" style="width:100%;height: 400px;margin-bottom: 20px" />
+                <b:commandButton  onclick="ajax:platController.ajouter()" look="primary btn-block" 
+                                  oncomplete="ajouterFromSubmit()" value="Ajouter" size="lg" update="@form:ajouterForm">
+                </b:commandButton>
+                <b:fetchBeanInfos />
+            </h:form>
+
         </c:if>
     </b:modal>
+
+    <script>
+        function ajouterFromSubmit() {
+            if (!bfHasError) {
+                $('.ajouter').modal('hide')
+                console.log("haaaa mcha")
+                window.location.href = "/GestionBuvette1-war/admin/plats.xhtml";
+            } else {
+                bfHasError = false;
+            }
+        }
+
+        function readURL(input) {
+            if (input.files) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    console.log("yeaah")
+                    console.log(e.target.result)
+                    $('.img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".imgInp").change(function () {
+            readURL(this);
+        });
+
+        $("#UpdatePlat").on("hidden.bs.modal", function () {
+            console.log("mchaaa")
+            $(".hdBtn").click();
+        })
+    </script>
 </html>

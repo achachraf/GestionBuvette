@@ -7,11 +7,11 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <b:column col-md="10">
+    <b:column col-md="10" offset-md="2" offset-sm="3" offset-xs="5" >
         <b:row class="dashboard-cards-row">
             <h1>Dashboard</h1>
             <b:column class="dashboard-card" col-md="5">
-                <h5 style="color: red">Dernières commandes non payées</h5>
+                <h5 style="color: red">Dernières consomations non payées</h5>
                 <h:form>
                     <b:dataTable value="#{consomationController.getNonPaidClientConsomationsLimit(clientController.client,5)}" 
                                  mark-search-results="false" paginated="false" searching="false" var="consomation">
@@ -24,7 +24,7 @@
             </b:column>
 
             <b:column  class="dashboard-card" offset-md="2" col-md="5">
-                <h5 style="color: green;">Vos dernières commandes passées</h5>
+                <h5 style="color: green;">Vos dernières consomations passées</h5>
                  <h:form>
                     <b:dataTable value="#{consomationController.getLastClientConsomations(clientController.client,5)}" 
                                  mark-search-results="false" paginated="false" searching="false" var="consomation">
@@ -38,7 +38,7 @@
 
         </b:row>
         <b:row>
-            <b:column style="font-size: 20px    " class="dashboard-card" offset-md="2" col-md="8">
+            <b:column style="font-size: 20px" class="dashboard-card" offset-md="2" col-md="8">
                 <h5>Vos informations</h5>
                 <p>Indice de fidelité: <span style="color: green;font-weight: bold">#{clientController.client.fidelite}</span></p>
                 <c:if test="#{clientController.client.active > 0}">

@@ -15,6 +15,7 @@
             </c:when>
             <c:otherwise>
                 <ui:param name="category" value="#{categoriesController.getCategoryById(param['id'])}" />
+                <ui:param name="plats" value="#{platController.getCategoryPlats(param['id'])}" />
                 <title>Catégorie - #{category.nom}</title>
             </c:otherwise>
         </c:choose>
@@ -28,19 +29,19 @@
             <c:when test="#{empty param['id']}">
                 <h1>Cette actions n'est pas allouée</h1>
             </c:when>
-             <c:when test="#{empty category}">
+            <c:when test="#{empty category}">
                 <h1>Category n'existe pas !</h1>
             </c:when>
-            <c:when test="#{category.platList.size() == 0}">
+            <c:when test="#{plats.size() == 0}">
                 <h1>Cette catégorie est encore vide...</h1>
             </c:when>
             <c:otherwise>
                 <b:container fluid="true">
                     <b:row style="margin-top:2%">
-                    
+
                         <h1 style="text-align: center">La Catégorie #{category.nom}</h1>
                         <b:column col-md="10" offset-md="1" style="margin-top: 3%">
-                            <c:forEach items="#{category.platList}" var="plat">
+                            <c:forEach items="#{plats}" var="plat">
                                 <ui:include src="layout/platLayout.xhtml">
                                     <ui:param name="plat" value="#{plat}" />
                                 </ui:include>
@@ -50,6 +51,9 @@
                 </b:container>
             </c:otherwise>
         </c:choose>
+        <b:row>
+            <ui:include src="layout/footer.xhtml" />
+        </b:row>
     </h:body>
 </html>
 

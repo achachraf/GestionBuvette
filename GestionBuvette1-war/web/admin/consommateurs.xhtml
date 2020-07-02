@@ -16,6 +16,7 @@ and open the template in the editor.
         <title>Consommateurs</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+        <h:outputStylesheet library="css" name="styles.css" />
         <style>
             #javax_faces_developmentstage_messages
             {
@@ -26,9 +27,9 @@ and open the template in the editor.
             function modal()
             {
                 var url = window.location.href;
-                if(url.indexOf('?id') != -1) {
+                if (url.indexOf('?id') != -1) {
                     $("#consomationDetails").modal();
-                }    
+                }
             }
         </script>
     </h:head>
@@ -55,49 +56,59 @@ and open the template in the editor.
             </b:container>
         </c:if>
         <c:if test="#{not empty adminController.admin.id}">
-            
-            <ui:include src="../layout/adminNav.xhtml"/>
-            <b:column col-md="10">
-                <b:tabView active-index="0" >
-                    <b:tab title="Active ( #{clientController.getTopClients().size()} )">
-                        <h:form>
-                            <b:dataTable value="#{clientController.getTopClients()}" 
-                                     mark-search-results="false" paginated="false" searching="false" var="client">
-                                <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
-                                <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
-                                <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
-                            </b:dataTable>
-                        </h:form>
-                    </b:tab>
-                    <b:tab title="Non Active ( #{clientController.getTopClientsNonActive().size()} )">
-                        <h:form>
-                            <b:dataTable value="#{clientController.getTopClientsNonActive()}" 
-                                     mark-search-results="false" paginated="false" searching="false" var="client">
-                                <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
-                                <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
-                                <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
-                            </b:dataTable>
-                        </h:form>
-                    </b:tab>
-                    <b:tab title="Tous ( #{clientController.getTopClientstous().size()} )">
-                        <h:form>
-                            <b:dataTable value="#{clientController.getTopClientstous()}" 
-                                     mark-search-results="false" paginated="false" searching="false" var="client">
-                                <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
-                                <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
-                                <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
-                            </b:dataTable>
-                        </h:form>
-                    </b:tab>
+            <b:row >
+                <ui:include src="../layout/adminNav.xhtml"/>
+                <b:row class="dashbaord-cards-row" >
+                      <h1 style="text-align: center; margin: 4% 0 0 13%">Gestion des Consomateurs</h1>
+                    <b:column col-md="8" offset-md="3" offset-sm="3" offset-xs="5" class="dashboard-card">
+                        <b:tabView active-index="0" >
+                            <b:tab title="Active ( #{clientController.getTopClients().size()} )">
+                                <h:form>
+                                    <b:dataTable value="#{clientController.getTopClients()}" 
+                                                 mark-search-results="false" paginated="false" searching="false" var="client">
+                                        <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
+                                        <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
+                                        <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
+                                    </b:dataTable>
+                                </h:form>
+                            </b:tab>
+                            <b:tab title="Non Active ( #{clientController.getTopClientsNonActive().size()} )">
+                                <h:form>
+                                    <b:dataTable value="#{clientController.getTopClientsNonActive()}" 
+                                                 mark-search-results="false" paginated="false" searching="false" var="client">
+                                        <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
+                                        <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
+                                        <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
+                                    </b:dataTable>
+                                </h:form>
+                            </b:tab>
+                            <b:tab title="Tous ( #{clientController.getTopClientstous().size()} )">
+                                <h:form>
+                                    <b:dataTable value="#{clientController.getTopClientstous()}" 
+                                                 mark-search-results="false" paginated="false" searching="false" var="client">
+                                        <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
+                                        <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
+                                        <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
+                                    </b:dataTable>
+                                </h:form>
+                            </b:tab>
 
-                </b:tabView>
-            </b:column>
-            
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ajouter">Ajouter Consommateur</button>
+                        </b:tabView>
+                    </b:column>
+                </b:row>
+            </b:row>
+            <b:row>
+                <b:column style="text-align:center" col-md="6" offset-md="4">
+                    <button style="width:100%;margin-top:8%" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ajouter">Ajouter Consommateur</button>
+
+                </b:column>    
+            </b:row>
+
+
         </c:if>
 
     </h:body>
-    
+
 
     <b:modal id="ajouter" title="Ajouter Consommateur" styleClass="ajouter">
         <c:if test="#{not empty adminController.admin.id}">

@@ -1,18 +1,18 @@
 .princ{
-        padding:5%;
-        margin:10%;
-        margin-top: 0%;
-        background: #f8f8f8;
-        }
-        #button{
-            background: #5bc0de;
-        }
-        #title{
-            margin-top:7%;
-            text-align: center;
-        }
-        #navbar{
-            background: #f8f8f8;
-            box-shadow: 5px 0px 5px 0px rgba(212,212,212,1);
-            height: 800px;
-        }
+    padding:5%;
+    margin:10%;
+    margin-top: 0%;
+    background: #f8f8f8;
+}
+#button{
+    background: #5bc0de;
+}
+#title{
+    margin-top:7%;
+    text-align: center;
+}
+/*#navbar{
+    background: #f8f8f8;
+    box-shadow: 5px 0px 5px 0px rgba(212,212,212,1);
+    height: 800px;
+}*/

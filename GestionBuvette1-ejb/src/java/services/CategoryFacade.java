@@ -35,6 +35,15 @@ public class CategoryFacade extends AbstractFacade<Category> {
         em.flush();
         em.refresh(entity);
     }
+
+    @Override
+    public void edit(Category entity) {
+        super.edit(entity);
+        em.flush();
+        em.refresh(entity);
+    }
+    
+    
     
     
     

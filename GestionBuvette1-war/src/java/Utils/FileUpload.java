@@ -17,18 +17,24 @@ import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.servlet.http.Part;
 
+import javax.servlet.annotation.MultipartConfig;
+
+//import org.apache.commons.lang.ObjectUtils;
+
 /**
  *
  * @author achra
  */
-
 @Named(value = "fileUpload")
 @SessionScoped
-public class FileUpload implements Serializable  {
+@MultipartConfig(location = "/")
+public class FileUpload implements Serializable {
 
     private Part uploadedFile;
-    private String folder = "C:\\Users\\Zbakh\\Documents\\JEE\\GestionBuvette\\GestionBuvette1-war\\web\\resources\\uploads";
+    private String folder = "C:\\Users\\achra\\Documents\\NetBeansProjects\\branch1\\GestionBuvette\\GestionBuvette1-war\\web\\resources\\uploads";
+//    private String folder = "web/resources/uploads";
 
+//     "../../../web/resources/uploads"
     public FileUpload() {
     }
 
@@ -47,31 +53,40 @@ public class FileUpload implements Serializable  {
     public void setFolder(String folder) {
         this.folder = folder;
     }
-    
-    
+
     public void saveFile() {
         System.out.println(uploadedFile);
         try (InputStream input = uploadedFile.getInputStream()) {
             String extension = getFileExtension(uploadedFile.getSubmittedFileName());
             String fileName = getRandomString() + "." + extension;
-            Files.copy(input, new File(folder, fileName).toPath());
+            File file = new File(folder, fileName);
+            if (file.exists()) {
+                System.out.println("Directory exist!");
+            } else {
+                System.out.println("Directory doens't exist!");
+            }
+            Files.copy(input, file.toPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public String saveFile(Part uploadedFile) {
+
+    public String saveFile(Part uploadedFile)  {
         System.out.println(uploadedFile);
         try (InputStream input = uploadedFile.getInputStream()) {
             String extension = getFileExtension(uploadedFile.getSubmittedFileName());
             String fileName = getRandomString() + "." + extension;
-            Files.copy(input, new File(folder, fileName).toPath());
+            File file = new File(folder, fileName);
+            Files.copy(input, file.toPath());
             return fileName;
+            
         } catch (IOException e) {
             e.printStackTrace();
-            return "";
+            return null;
         }
-        
+
     }
+
     public String getRandomString() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -85,9 +100,9 @@ public class FileUpload implements Serializable  {
         String generatedString = buffer.toString();
         return generatedString;
     }
-    
-    public String getFileExtension(String filename){
-        return filename.substring(filename.lastIndexOf(".")+1);
+
+    public String getFileExtension(String filename) {
+        return filename.substring(filename.lastIndexOf(".") + 1);
     }
 
 }

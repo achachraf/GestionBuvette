@@ -1,0 +1,22 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:f = "http://java.sun.com/jsf/core"
+    >
+    <b:row class="dashbaord-cards-row">
+        <b:column class="dashboard-card" col-md="4" offset-md="4">
+            <h3>Veuillez s'authentifier pour commander un plat</h3>
+            <h3>Si vous n'avez pas un compte, vous pouvez toujours s'inscrire!</h3>
+            <b:row style="margin-top: 8% ">
+                <b:column col-md="5">
+                    <button style="width: 100%" class="btn btn-info" onclick="openModal('.loginModal')" >Login</button>
+                </b:column>
+                <b:column col-md="5" offset-md="2">
+                    <button style="width: 100%" class="btn btn-info" onclick="openModal('.registerModal')" >Register</button>
+                </b:column>
+            </b:row>
+            
+        </b:column>
+    </b:row>
+</ui:composition>

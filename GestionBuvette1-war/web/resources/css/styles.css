@@ -133,7 +133,8 @@ body{
 .dashboard-menu{
     padding-top: 15px;
     box-shadow: 4px -5px 9px -3px rgba(0,0,0,0.35);
-    height: 800px;
+    height: 130%;
+    position: absolute !important;
 }
 
 .dashboard-menu span{
@@ -178,6 +179,10 @@ body{
 
 .dashboard-card h3{
     font-size: 20px;
+}
+
+.dashboard-body{
+    position: relative;
 }
 
 /*

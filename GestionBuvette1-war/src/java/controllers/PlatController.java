@@ -12,8 +12,10 @@ import entities.Plat;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.Dependent;
@@ -21,6 +23,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 import services.PlatFacade;
 
@@ -30,6 +33,7 @@ import services.PlatFacade;
  */
 @Named(value = "platController")
 @SessionScoped
+@MultipartConfig(location = "/")
 public class PlatController implements Serializable {
 
     /**
@@ -44,6 +48,7 @@ public class PlatController implements Serializable {
     private boolean redirection = false;
     private Part uploadedFile;
     FileUpload fileUpload = new FileUpload();
+   
     
     public PlatController() {
     }
@@ -80,7 +85,11 @@ public class PlatController implements Serializable {
         this.redirection = redirection;
     }
     
-    
+    public String initPlat(){
+        selectedPlat = null;
+        System.out.println("plat initialized");
+        return "plats.xhtml";
+    }
     
     public Plat getRandomPlat(){
         Plat plat = new Plat();
@@ -193,10 +202,24 @@ public class PlatController implements Serializable {
     public String ajouter(){
         selectedPlat = new Plat();
         if(uploadedFile != null){
-            plat.setImage(fileUpload.saveFile(uploadedFile));
+            String fileName = fileUpload.saveFile(uploadedFile);
+            if(fileName != null){
+                plat.setImage(fileUpload.saveFile(uploadedFile));
+                this.platFacade.create(this.plat);
+            }
+            else{
+                FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Error 500","Insertion du plat a echouée!"));
+            }
         } 
-        this.platFacade.create(this.plat);
         return "/admin/plats.xhtml";
     }
+    
+    
+    public List<Plat> getCategoryPlats(int idCateg){
+        return platFacade.getPlatsByCategory(idCateg);
+    }
+    
 
 }

@@ -16,7 +16,7 @@
         </ui:include>
         <c:choose>
             <c:when test="#{empty clientController.client.idClient}">
-                <h1>Vous n'êtes pas autorisé pour voir cette page, veuillez s'authentifier.</h1>
+                <ui:include src="layout/notAllowedLayout.xhtml" />
             </c:when>
             <c:otherwise>
                 <b:row>

@@ -28,11 +28,14 @@
         </ui:include>
         <c:choose>
 
-            <c:when test="#{(empty clientController.client.idClient or empty param['id']) }">
-                <h1>Cette actions n'est pas allouée</h1>
+            <c:when test="#{(empty clientController.client.idClient) }">
+                <ui:include src="layout/notAllowedLayout.xhtml" />
+            </c:when>
+            <c:when test="#{empty param['id']}">
+                <h1>Veuillez precisez le plat !</h1>
             </c:when>
             <c:when test="#{empty plat}">
-                <h1>Ce Plat n'existe pas !</h1>
+                <h1>Ce plat n'existe pas !</h1>
             </c:when>
             <c:otherwise >
 

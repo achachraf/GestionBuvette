@@ -14,21 +14,19 @@
             <b:column col-md="3">
                 <h5>Mape du Site</h5>
                 <ul>
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li><a href="#">Link 4</a></li>
-                    <li><a href="#">Link 5</a></li>
+                    <li><a href="/GestionBuvette1-war/index.xhtml">Home</a></li>
+                    <ui:repeat var="category" value="#{categoriesController.getLimitedRandomPlats(3)}">
+                        <li><a href="/GestionBuvette1-war/category.xhtml?id=#{category.idCat}">#{category.nom}</a></li>
+                    </ui:repeat>
                 </ul>
             </b:column>
             <b:column col-md="3">
                 <h5>Liens utils</h5>
                 <ul>
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li><a href="#">Link 4</a></li>
-                    <li><a href="#">Link 5</a></li>
+                    <li><a target="_blank" href="http://ensat.ac.ma/Portail/">ENSAT</a></li>
+                    <li><a target="_blank" href="#">Gestion Buvette</a></li>
+                    <li><a target="_blank" href="http://ensat.ac.ma/edt">Emploi du temps</a></li>
+                    <li><a target="_blank" href="https://www.uae.ma/website/">UAE</a></li>
                 </ul>
             </b:column>
         </b:row>

@@ -7,7 +7,7 @@
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <h:outputStylesheet library="css" name="styles.css" />
-        <title>aDashboard - Gestion Buvette</title>
+        <title>Dashboard - Gestion Buvette</title>
     </h:head>
     <h:body>
 
@@ -18,13 +18,13 @@
                 </ui:include>
             </b:row>
             <c:if test="#{not empty clientController.client.idClient}">
-                <b:row >
+                <b:row class="dashboard-body" >
                     <ui:include src="../layout/dashboardMenu.xhtml"/>
                     <ui:include src="../layout/dashboardContent.xhtml" />
                 </b:row>
             </c:if>
             <c:if test="#{empty clientController.client.idClient}">
-                <h1>Vous n'êtes pas autorisé pour voir cette page, veuillez s'authentifier</h1>
+                <ui:include src="layout/notAllowedLayout.xhtml" />
             </c:if>
         </b:container>
 

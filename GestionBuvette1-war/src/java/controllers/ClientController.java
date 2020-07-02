@@ -12,6 +12,7 @@ import entities.Plat;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -161,7 +162,7 @@ public class ClientController implements Serializable {
         return plat;
     }
     
-    public double consomAvg() {
+    public String consomAvg() {
         double sum = 0;
         double avg = 0;
         for(Consomation consomation:client.getConsomationList()){
@@ -178,7 +179,8 @@ public class ClientController implements Serializable {
         int diff = (int) Math.floor(((last.getTime()-first.getTime())/(1000*60*60*24)));
         
         avg = sum/diff;
-        return avg;
+        DecimalFormat df = new DecimalFormat("###.###");
+        return df.format(avg);
     }
     
     public float getMinConsom(){

@@ -16,6 +16,7 @@ and open the template in the editor.
         <title>Admin Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+        <h:outputStylesheet library="css" name="styles.css" />
         <style>
             #javax_faces_developmentstage_messages
             {
@@ -26,9 +27,9 @@ and open the template in the editor.
             function modal()
             {
                 var url = window.location.href;
-                if(url.indexOf('?id') != -1) {
+                if (url.indexOf('?id') != -1) {
                     $("#consomationDetails").modal();
-                }    
+                }
             }
         </script>
     </h:head>
@@ -55,65 +56,71 @@ and open the template in the editor.
             </b:container>
         </c:if>
         <c:if test="#{not empty adminController.admin.id}">
-            
-            <ui:include src="../layout/adminNav.xhtml"/>
-            <b:column col-md="10" class="dashboard-menu">
-                <b:row style="margin-bottom: 10px;">
-                <b:column class="dashboard-card" col-md="9">
-                    <h5>Consomation à Servire</h5>
-                    <h:form>
-                        <b:dataTable value="#{consomationController.getConsomationServire()}" 
-                                     mark-search-results="false" paginated="true" searching="false" var="consomation">
-                            <b:dataTableColumn  value="#{consomation.idConsom}"  label="Id Consomation"/>
-                            <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
-                            <b:dataTableColumn value="#{consomation.montant}"  />
-                            <b:dataTableColumn label="">
-                                <a class="btn btn-primary btn-sm" href="index.xhtml?id=#{consomation.idConsom}">Details</a>
-                            </b:dataTableColumn>
-                            <b:dataTableColumn label="">
-                                <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/index.xhtml')}" value="Marquer Préparé"></h:commandButton>
-                            </b:dataTableColumn>
-                            <c:set var="id" value="#{consomation.idConsom}"/>
-                        </b:dataTable>
-                    </h:form>
+            <b:row class="dashboard-body">
+                <ui:include src="../layout/adminNav.xhtml"/>
+                <b:column col-md="10" offset-md="2" offset-sm="3" offset-xs="5" >
+                    <b:row style="margin-bottom: 10px;" class="dashboard-cards-row">
+                        <h1>Dashboard</h1>
+                        <b:column class="dashboard-card" col-md="5">
+                            <h5>Top plats commandés</h5>
+                            <h:form>
+                                <b:dataTable value="#{platController.getTopPlats()}" 
+                                             mark-search-results="false" paginated="false" searching="false" var="plat">
+                                    <b:dataTableColumn  value="#{plat.idPlat.nomPlat}"  label="Plat"/>
+                                </b:dataTable>
+                            </h:form>
+                        </b:column>
+                        <b:column class="dashboard-card" col-md="5" offset-md="2">
+                            <h5>Top clients</h5>
+                            <h:form>
+                                <b:dataTable value="#{clientController.getTopClients()}" 
+                                             mark-search-results="false" paginated="false" searching="false" var="client">
+                                    <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
+                                    <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
+                                    <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
+                                </b:dataTable>
+                            </h:form>
+                        </b:column>
+                    </b:row>
+                    <b:row style="margin-bottom: 10px;" class="dashboard-cards-row">
+                        <b:column class="dashboard-card" col-md="8" offset-md="2">
+                            <h5>Consomation à Servire</h5>
+                            <h:form>
+                                <b:dataTable value="#{consomationController.getConsomationServire()}" 
+                                             mark-search-results="false" paginated="true" searching="false" var="consomation">
+                                    <b:dataTableColumn  value="#{consomation.idConsom}"  label="Id Consomation"/>
+                                    <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
+                                    <b:dataTableColumn value="#{consomation.montant}"  />
+                                    <b:dataTableColumn label="">
+                                        <a class="btn btn-primary btn-sm" href="index.xhtml?id=#{consomation.idConsom}">Details</a>
+                                    </b:dataTableColumn>
+                                    <b:dataTableColumn label="">
+                                        <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/index.xhtml')}" value="Marquer Préparé"></h:commandButton>
+                                    </b:dataTableColumn>
+                                    <c:set var="id" value="#{consomation.idConsom}"/>
+                                </b:dataTable>
+                            </h:form>
+                        </b:column>
+                    </b:row>
+
+
                 </b:column>
-                </b:row>
-                <b:column class="dashboard-card" col-md="4">
-                    <h5>Top plats commandés</h5>
-                    <h:form>
-                        <b:dataTable value="#{platController.getTopPlats()}" 
-                                     mark-search-results="false" paginated="false" searching="false" var="plat">
-                            <b:dataTableColumn  value="#{plat.idPlat.nomPlat}"  label="Plat"/>
-                        </b:dataTable>
-                    </h:form>
-                </b:column>
-                <b:column class="dashboard-card" col-md="2"></b:column>
-                <b:column class="dashboard-card" col-md="4">
-                    <h5>Top clients</h5>
-                    <h:form>
-                        <b:dataTable value="#{clientController.getTopClients()}" 
-                                     mark-search-results="false" paginated="false" searching="false" var="client">
-                            <b:dataTableColumn  value="#{client.idClient}"  label="Id Client"/>
-                            <b:dataTableColumn  value="#{client.nom}"  label="Nom"/>
-                            <b:dataTableColumn  value="#{client.prenom}"  label="Prenom"/>
-                        </b:dataTable>
-                    </h:form>
-                </b:column>
-            </b:column>
+            </b:row>
+
         </c:if>
 
     </h:body>
-    
-    
-<b:modal id="consomationDetails" title="Consomation #{param['id']} Details" styleClass="consomationDetails">
-    <c:if test="#{not empty adminController.admin.id}">
-    <h:form>
-        <b:dataTable value="#{consomationController.getConsomationById(param['id']).commandeList}" 
-                     mark-search-results="false" paginated="true" searching="false" var="consomation">
-            <b:dataTableColumn value="#{consomation.idPlat.nomPlat}" label="Nom Plat"/>
-            <b:dataTableColumn value="#{consomation.quantite}" label="Quantité"/>
-        </b:dataTable>
-    </h:form>
+
+
+    <b:modal id="consomationDetails" title="Consomation #{param['id']} Details" styleClass="consomationDetails">
+        <c:if test="#{not empty adminController.admin.id}">
+            <h:form>
+                <b:dataTable value="#{consomationController.getConsomationById(param['id']).commandeList}" 
+                             mark-search-results="false" paginated="true" searching="false" var="consomation">
+                    <b:dataTableColumn value="#{consomation.idPlat.nomPlat}" label="Nom Plat"/>
+                    <b:dataTableColumn value="#{consomation.quantite}" label="Quantité"/>
+                </b:dataTable>
+            </h:form>
         </c:if>
-</b:modal>
+    </b:modal>
 </html>

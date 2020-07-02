@@ -16,6 +16,7 @@ and open the template in the editor.
         <title>Admin Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+        <h:outputStylesheet library="css" name="styles.css" />
         <style>
             #javax_faces_developmentstage_messages
             {
@@ -26,9 +27,9 @@ and open the template in the editor.
             function modal()
             {
                 var url = window.location.href;
-                if(url.indexOf('?id') != -1) {
+                if (url.indexOf('?id') != -1) {
                     $("#consomationDetails").modal();
-                }    
+                }
             }
         </script>
     </h:head>
@@ -55,75 +56,83 @@ and open the template in the editor.
             </b:container>
         </c:if>
         <c:if test="#{not empty adminController.admin.id}">
-            
-            <ui:include src="../layout/adminNav.xhtml"/>
-            <b:column col-md="10">
-                <b:tabView active-index="0" >
-                    <b:tab title="A préparer ( #{consomationController.getConsomationServire().size()} )">
-                        <h:form>
-                            <b:dataTable value="#{consomationController.getConsomationServire()}" 
-                                         mark-search-results="false" paginated="true" searching="true" var="consomation">
-                                <b:dataTableColumn  value="#{consomation.idConsom}"  label="Id Consomation"/>
-                                <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
-                                <b:dataTableColumn value="#{consomation.montant}"  />
-                                <c:if test="#{not empty consomation.datePayement}">
-                                    <b:dataTableColumn value="Payé" label=""  />
-                                </c:if>
-                                <c:if test="#{empty consomation.datePayement}">
-                                    <b:dataTableColumn value="Non Payé" label=""  />
-                                </c:if>
-                                <b:dataTableColumn label="">
-                                    <a class="btn btn-primary btn-sm" href="consommations.xhtml?id=#{consomation.idConsom}">Details</a>
-                                </b:dataTableColumn>
-                                <b:dataTableColumn label="">
-                                    <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/consommations.xhtml')}" value="Marquer Préparé"></h:commandButton>
-                                </b:dataTableColumn>
-                                <c:set var="id" value="#{consomation.idConsom}"/>
-                            </b:dataTable>
-                        </h:form>
-                    </b:tab>
-                    <b:tab title="Préparé ( #{consomationController.getConsomationPrepare().size()} )">
-                        <h:form>
-                            <b:dataTable value="#{consomationController.getConsomationPrepare()}" var="consomation">
-                                <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
-                                <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
-                                <b:dataTableColumn value="#{consomation.montant}" label="Montant"  />
-                                <c:if test="#{not empty consomation.datePayement}">
-                                    <b:dataTableColumn value="Payé" label=""  />
-                                </c:if>
-                                <c:if test="#{empty consomation.datePayement}">
-                                    <b:dataTableColumn value="Non Payé" label=""  />
-                                </c:if>
-                                <b:dataTableColumn label="">
-                                    <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerPaye(consomation.idConsom,'/admin/consommations.xhtml')}" value="Marquer Payé"></h:commandButton>
-                                </b:dataTableColumn>
-                            </b:dataTable>
-                        </h:form>
-                    </b:tab>
-                    <b:tab title="Servis ( #{consomationController.getConsomationServis().size()} )">
-                            <b:dataTable value="#{consomationController.getConsomationServis()}" var="consomation">
-                                <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
-                                <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
-                                <b:dataTableColumn value="#{consomation.montant}" label="Montant"  />
-                            </b:dataTable>
-                    </b:tab>
+            <b:row class="dashboard-body">
+                <ui:include src="../layout/adminNav.xhtml"/>
+                <b:row class="dashboard-cards-row">
+                    <h1 style="text-align:center">Gestion des consomations</h1>
+                    <b:column class="dashboard-card" col-md="8" offset-md="3" offset-sm="3" offset-xs="5">
+                        <b:tabView active-index="0" >
+                            <b:tab title="A préparer ( #{consomationController.getConsomationServire().size()} )">
+                                <h:form>
+                                    <b:dataTable value="#{consomationController.getConsomationServire()}" 
+                                                 mark-search-results="false" paginated="true" searching="true" var="consomation">
+                                        <b:dataTableColumn  value="#{consomation.idConsom}"  label="Id Consomation"/>
+                                        <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
+                                        <b:dataTableColumn value="#{consomation.montant}"  />
+                                        <c:if test="#{not empty consomation.datePayement}">
+                                            <b:dataTableColumn value="Payé" label=""  />
+                                        </c:if>
+                                        <c:if test="#{empty consomation.datePayement}">
+                                            <b:dataTableColumn value="Non Payé" label=""  />
+                                        </c:if>
+                                        <b:dataTableColumn label="">
+                                            <a class="btn btn-primary btn-sm" href="consommations.xhtml?id=#{consomation.idConsom}">Details</a>
+                                        </b:dataTableColumn>
+                                        <b:dataTableColumn label="">
+                                            <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerServis(consomation.idConsom,'/admin/consommations.xhtml')}" value="Marquer Préparé"></h:commandButton>
+                                        </b:dataTableColumn>
+                                        <c:set var="id" value="#{consomation.idConsom}"/>
+                                    </b:dataTable>
+                                </h:form>
+                            </b:tab>
+                            <b:tab title="Préparé ( #{consomationController.getConsomationPrepare().size()} )">
+                                <h:form>
+                                    <b:dataTable value="#{consomationController.getConsomationPrepare()}" var="consomation">
+                                        <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
+                                        <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
+                                        <b:dataTableColumn value="#{consomation.montant}" label="Montant"  />
+                                        <c:if test="#{not empty consomation.datePayement}">
+                                            <b:dataTableColumn value="Payé" label=""  />
+                                        </c:if>
+                                        <c:if test="#{empty consomation.datePayement}">
+                                            <b:dataTableColumn value="Non Payé" label=""  />
+                                        </c:if>
+                                        <b:dataTableColumn label="">
+                                            <h:commandButton class="btn btn-primary btn-sm" action="#{consomationController.marquerPaye(consomation.idConsom,'/admin/consommations.xhtml')}" value="Marquer Payé"></h:commandButton>
+                                        </b:dataTableColumn>
+                                    </b:dataTable>
+                                </h:form>
+                            </b:tab>
+                            <b:tab title="Servis ( #{consomationController.getConsomationServis().size()} )">
+                                <b:dataTable value="#{consomationController.getConsomationServis()}" var="consomation">
+                                    <b:dataTableColumn value="#{consomation.idConsom}"  label="Id Consomation"/>
+                                    <b:dataTableColumn value="#{converters.getFormattedDate(consomation.dateCreation)}" label="Date de Creation" />
+                                    <b:dataTableColumn value="#{consomation.montant}" label="Montant"  />
+                                </b:dataTable>
+                            </b:tab>
 
-                </b:tabView>
-            </b:column>
+                        </b:tabView>
+
+
+                    </b:column>
+
+                </b:row>
+            </b:row>
+
         </c:if>
 
     </h:body>
-    
-    
-<b:modal id="consomationDetails" title="Consomation #{param['id']} Details" styleClass="consomationDetails">
-    <c:if test="#{not empty adminController.admin.id}">
-    <h:form>
-        <b:dataTable value="#{consomationController.getConsomationById(param['id']).commandeList}" 
-                     mark-search-results="false" paginated="true" searching="false" var="consomation">
-            <b:dataTableColumn value="#{consomation.idPlat.nomPlat}" label="Nom Plat"/>
-            <b:dataTableColumn value="#{consomation.quantite}" label="Quantité"/>
-        </b:dataTable>
-    </h:form>
+
+
+    <b:modal id="consomationDetails" title="Consomation #{param['id']} Details" styleClass="consomationDetails">
+        <c:if test="#{not empty adminController.admin.id}">
+            <h:form>
+                <b:dataTable value="#{consomationController.getConsomationById(param['id']).commandeList}" 
+                             mark-search-results="false" paginated="true" searching="false" var="consomation">
+                    <b:dataTableColumn value="#{consomation.idPlat.nomPlat}" label="Nom Plat"/>
+                    <b:dataTableColumn value="#{consomation.quantite}" label="Quantité"/>
+                </b:dataTable>
+            </h:form>
         </c:if>
-</b:modal>
+    </b:modal>
 </html>

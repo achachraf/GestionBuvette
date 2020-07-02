@@ -16,6 +16,7 @@ and open the template in the editor.
         <title>Admin Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="../resources/css/adminStyle.css" media="all" />
+        <h:outputStylesheet library="css" name="styles.css" />
 
     </h:head>
     <h:body>
@@ -43,7 +44,7 @@ and open the template in the editor.
         <c:if test="#{not empty adminController.admin.id}">
             
             <ui:include src="../layout/adminNav.xhtml"/>
-            <b:column col-md="10" class="dashboard-menu">
+            <b:column col-md="8" offset-md="4" offset-sm="3" offset-xs="5" style="margin-top: 10%">
                 <b:row style="margin-bottom: 10px;">
                     <b:messages />
                 <b:column class="dashboard-card" col-md="9">
